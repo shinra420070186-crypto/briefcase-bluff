@@ -16,14 +16,19 @@ export const useGameStore = create((set, get) => ({
   winStreak: 0,
   cardStatus: null, // SAFE or ELIMINATE
   roundResult: null,
+  recentNames: JSON.parse(localStorage.getItem('bb_saved_names') || '[]'),
 
   addPlayer: (name) => set((state) => {
+    // Prevent adding empty or duplicate active players
+    if (!name.trim() || state.players.some(p => p.name === name)) return state;
+    
     const newPlayer = { name, id: crypto.randomUUID() };
-    const savedNames = JSON.parse(localStorage.getItem('bb_saved_names') || '[]');
-    if (!savedNames.includes(name)) {
-      localStorage.setItem('bb_saved_names', JSON.stringify([...savedNames, name]));
-    }
-    return { players: [...state.players, newPlayer] };
+    const updatedNames = [...new Set([...state.recentNames, name])];
+    
+    // Save to device memory
+    localStorage.setItem('bb_saved_names', JSON.stringify(updatedNames));
+    
+    return { players: [...state.players, newPlayer], recentNames: updatedNames };
   }),
 
   removePlayer: (id) => set((state) => ({
@@ -77,7 +82,7 @@ export const useGameStore = create((set, get) => ({
     const nextPlayers = [...state.players];
     let nextWinStreak = state.winStreak;
 
-    // King of the Hill: Loser to the back of the line.
+    // King of the Hill: Loser goes to the back of the queue.
     if (state.roundResult.p1Lost) {
       const loser = nextPlayers.shift(); 
       nextPlayers.push(loser);
