@@ -77,19 +77,20 @@ export const useGameStore = create((set, get) => ({
   nextRound: () => {
     const state = get();
     const nextPlayers = [...state.players];
-    let nextWinStreak = state.winStreak;
+    // FIX: Calculate next streak BEFORE mutating players array
+    let nextWinStreak = state.roundResult.p1Lost ? 1 : state.winStreak + 1;
 
     if (state.roundResult.p1Lost) {
+      // p1 lost: move them to end of queue
       const loser = nextPlayers.shift(); 
       nextPlayers.push(loser);
-      nextWinStreak = 1; 
     } else {
+      // p2 lost: remove from position 1, push to end
       const loser = nextPlayers.splice(1, 1)[0]; 
       nextPlayers.push(loser);
-      nextWinStreak += 1; 
     }
 
-    // FIX: Requires a minimum of 2 wins, preventing 2-player games from ending after 1 round.
+    // Requires a minimum of 2 wins, preventing 2-player games from ending after 1 round.
     const targetWins = Math.max(state.initialRoster.length - 1, 2);
 
     if (nextWinStreak >= targetWins) {
@@ -105,8 +106,9 @@ export const useGameStore = create((set, get) => ({
     }
   },
 
+  // FIX: playAgain now reshuffles the roster instead of reusing original order
   playAgain: () => set((state) => ({
-    players: [...state.initialRoster],
+    players: shuffleArray([...state.initialRoster]),
     winStreak: 0,
     phase: 'peek',
     cardStatus: Math.random() > 0.5 ? 'SAFE' : 'ELIMINATE',
