@@ -3,6 +3,7 @@
   "short_name": "The Deck",
   "start_url": "/",
   "display": "standalone",
+  "orientation": "portrait",
   "theme_color": "#B8E3E9",
   "background_color": "#FAF9F6",
   "description": "A high-stakes social deduction party game.",
