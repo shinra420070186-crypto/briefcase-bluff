@@ -2,16 +2,41 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- FIX: viewport-fit=cover fills the notch/status bar area on iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>The Deck</title>
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#B8E3E9" />
-    <meta name="application-name" content="The Deck" />
+
+    <!-- Theme color for Android Chrome address bar -->
+    <meta name="theme-color" content="#FAF9F6" />
+
+    <!-- === iOS PWA: Removes Safari browser chrome when launched from home screen === -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- "black-translucent" lets your bg color bleed behind the status bar -->
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="The Deck" />
+
+    <!-- iOS touch icon (shown when user taps "Add to Home Screen") -->
     <link rel="apple-touch-icon" href="/icon-192x192.png" />
+
+    <!-- FIX: Padding-safe areas so content doesn't hide behind notch or home bar -->
+    <style>
+      :root {
+        --sat: env(safe-area-inset-top);
+        --sab: env(safe-area-inset-bottom);
+        --sal: env(safe-area-inset-left);
+        --sar: env(safe-area-inset-right);
+      }
+      #root {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+      }
+    </style>
   </head>
   <body class="bg-[#FAF9F6] text-slate-800 font-sans select-none touch-none overflow-x-hidden">
     <div id="root"></div>
