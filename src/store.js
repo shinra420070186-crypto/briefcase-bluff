@@ -14,18 +14,16 @@ export const useGameStore = create((set, get) => ({
   players: [], 
   initialRoster: [],
   winStreak: 0,
-  cardStatus: null, // SAFE or ELIMINATE
+  cardStatus: null, 
   roundResult: null,
   recentNames: JSON.parse(localStorage.getItem('bb_saved_names') || '[]'),
 
   addPlayer: (name) => set((state) => {
-    // Prevent adding empty or duplicate active players
     if (!name.trim() || state.players.some(p => p.name === name)) return state;
     
     const newPlayer = { name, id: crypto.randomUUID() };
     const updatedNames = [...new Set([...state.recentNames, name])];
     
-    // Save to device memory
     localStorage.setItem('bb_saved_names', JSON.stringify(updatedNames));
     
     return { players: [...state.players, newPlayer], recentNames: updatedNames };
@@ -52,12 +50,11 @@ export const useGameStore = create((set, get) => ({
   makeChoice: (choice) => {
     const state = get();
     const status = state.cardStatus;
-    const p1 = state.players[0]; // The one holding the phone
-    const p2 = state.players[1]; // The challenger
+    const p1 = state.players[0]; 
+    const p2 = state.players[1]; 
     
     let p1Lost = false;
 
-    // STEAL means P2 takes the card. LEAVE means P1 keeps the card.
     if (choice === 'STEAL') {
       if (status === 'ELIMINATE') p1Lost = false; 
       if (status === 'SAFE') p1Lost = true;       
@@ -82,18 +79,18 @@ export const useGameStore = create((set, get) => ({
     const nextPlayers = [...state.players];
     let nextWinStreak = state.winStreak;
 
-    // King of the Hill: Loser goes to the back of the queue.
     if (state.roundResult.p1Lost) {
       const loser = nextPlayers.shift(); 
       nextPlayers.push(loser);
-      nextWinStreak = 1; // New king gets 1 win
+      nextWinStreak = 1; 
     } else {
       const loser = nextPlayers.splice(1, 1)[0]; 
       nextPlayers.push(loser);
-      nextWinStreak += 1; // Current king streak increases
+      nextWinStreak += 1; 
     }
 
-    const targetWins = state.initialRoster.length - 1;
+    // FIX: Requires a minimum of 2 wins, preventing 2-player games from ending after 1 round.
+    const targetWins = Math.max(state.initialRoster.length - 1, 2);
 
     if (nextWinStreak >= targetWins) {
       set({ phase: 'gameover', players: nextPlayers, winStreak: nextWinStreak });
