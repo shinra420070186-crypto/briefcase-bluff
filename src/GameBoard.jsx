@@ -4,41 +4,43 @@ import { sfx } from './sfx';
 
 const FlipCard = ({ isFlipped, status }) => {
   return (
-    <div className="my-6 relative" style={{ perspective: '1200px', width: '14rem', height: '21rem' }}>
+    <div className="my-6 relative w-[190px] h-[254px] [perspective:1000px] font-sans">
       <div 
-        className="w-full h-full relative" 
-        style={{ 
-          transition: 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)', 
-          transformStyle: 'preserve-3d', 
-          transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' 
-        }}
+        className="relative w-full h-full text-center transition-transform duration-[800ms] [transform-style:preserve-3d]"
+        style={{ transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
       >
+        
+        {/* NEW UIVERSE FRONT: Coral & Bisque Gradient */}
         <div 
-          className="absolute inset-0 w-full h-full bg-white rounded-3xl border-2 border-[#B8E3E9] shadow-[0_15px_35px_rgba(0,0,0,0.06)] flex flex-col items-center justify-center overflow-hidden"
-          style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
+          className="absolute inset-0 flex flex-col items-center justify-center w-full h-full [backface-visibility:hidden] border border-[coral] rounded-2xl shadow-[0_8px_14px_0_rgba(0,0,0,0.2)]"
+          style={{
+            background: 'linear-gradient(120deg, bisque 60%, rgb(255, 231, 222) 88%, rgb(255, 211, 195) 40%, rgba(255, 127, 80, 0.603) 48%)',
+            color: 'coral'
+          }}
         >
-           <div className={`relative w-20 h-20 rounded-full border-4 flex items-center justify-center bg-white overflow-hidden transition-colors duration-300 ${isFlipped ? 'border-[#B8E3E9]' : 'border-slate-100'}`}>
-              <div className={`w-10 h-10 rounded-full transition-all duration-300 ${isFlipped ? 'bg-[#B8E3E9] scale-110' : 'bg-slate-200'}`}></div>
-           </div>
-           <p className={`mt-6 font-bold tracking-[0.2em] text-[10px] uppercase transition-colors ${isFlipped ? 'text-[#7BB2BB]' : 'text-slate-400'}`}>
-             {isFlipped ? 'Revealing...' : 'Hold to View'}
-           </p>
+          <p className="text-2xl font-black tracking-widest m-0 uppercase">THE DECK</p>
+          <p className="mt-2 font-bold tracking-[0.2em] text-[10px] uppercase opacity-80">
+            {isFlipped ? 'Revealing...' : 'Hold to View'}
+          </p>
         </div>
 
+        {/* NEW UIVERSE BACK: Dynamic Green/Red Gradients based on Game Status */}
         <div 
-          className="absolute inset-0 w-full h-full rounded-3xl flex items-center justify-center shadow-[0_15px_35px_rgba(0,0,0,0.12)] overflow-hidden bg-white"
-          style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+          className="absolute inset-0 flex flex-col items-center justify-center w-full h-full [backface-visibility:hidden] rounded-2xl shadow-[0_8px_14px_0_rgba(0,0,0,0.2)]"
+          style={{ 
+            transform: 'rotateY(180deg)',
+            background: status === 'SAFE' 
+              ? 'linear-gradient(120deg, #d1fae5 30%, #10b981 88%, #ecfdf5 40%, #6ee7b7 78%)' // Emerald Slice
+              : 'linear-gradient(120deg, #ffe4e6 30%, #e11d48 88%, #fff1f2 40%, #fda4af 78%)', // Rose Slice
+            border: status === 'SAFE' ? '1px solid #10b981' : '1px solid #e11d48',
+            color: 'white'
+          }}
         >
-          {status === 'SAFE' ? (
-            <div className="w-full h-full rounded-3xl border-8 border-emerald-50 bg-emerald-50 flex flex-col items-center justify-center">
-              <span className="text-4xl font-black tracking-widest text-emerald-600">SAFE</span>
-            </div>
-          ) : (
-            <div className="w-full h-full rounded-3xl border-8 border-rose-50 bg-rose-50 flex flex-col items-center justify-center">
-              <span className="text-3xl font-black tracking-widest text-rose-600">ELIMINATE</span>
-            </div>
-          )}
+          <p className="text-3xl font-black tracking-widest m-0 drop-shadow-md">
+            {status === 'SAFE' ? 'SAFE' : 'ELIMINATE'}
+          </p>
         </div>
+
       </div>
     </div>
   );
