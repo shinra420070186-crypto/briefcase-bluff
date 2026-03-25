@@ -2,6 +2,46 @@ import React, { useEffect, useState } from 'react';
 import { useGameStore } from './store';
 import { sfx } from './sfx';
 
+// NEW: Uiverse Midnight Sky Background Component
+const MidnightSky = () => (
+  <div className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none" style={{ backgroundColor: '#050505' }}>
+    <style>{`
+      .stars { position: absolute; inset: 0; background-repeat: repeat; pointer-events: none; }
+      .stars-1 {
+        background-image: radial-gradient(1px 1px at 10% 10%, #fff, transparent), radial-gradient(1px 1px at 30% 20%, #fff, transparent), radial-gradient(1px 1px at 50% 50%, #fff, transparent), radial-gradient(1px 1px at 70% 30%, #fff, transparent), radial-gradient(1px 1px at 90% 10%, #fff, transparent);
+        background-size: 200px 200px;
+        animation: twinkle 3s ease-in-out infinite;
+      }
+      .stars-2 {
+        background-image: radial-gradient(1.5px 1.5px at 20% 40%, #fff, transparent), radial-gradient(1.5px 1.5px at 60% 85%, #fff, transparent), radial-gradient(1.5px 1.5px at 85% 65%, #fff, transparent);
+        background-size: 300px 300px;
+        animation: twinkle 5s ease-in-out infinite 1s;
+      }
+      .stars-3 {
+        background-image: radial-gradient(2px 2px at 40% 70%, #fff, transparent), radial-gradient(2px 2px at 10% 80%, #fff, transparent), radial-gradient(2px 2px at 80% 40%, #fff, transparent);
+        background-size: 400px 400px;
+        animation: twinkle 7s ease-in-out infinite 2s;
+      }
+      .meteor { position: absolute; width: 2px; height: 2px; background: #fff; border-radius: 50%; box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.5); opacity: 0; pointer-events: none; }
+      .meteor::after { content: ""; position: absolute; top: 50%; transform: translateY(-50%); width: 80px; height: 1px; background: linear-gradient(90deg, #fff, transparent); }
+      .m1 { top: 10%; left: 110%; animation: shoot 8s linear infinite; }
+      .m2 { top: 30%; left: 110%; animation: shoot 12s linear infinite 4s; }
+      .m3 { top: 50%; left: 110%; animation: shoot 10s linear infinite 2s; }
+      .moon { position: absolute; top: 15%; right: 15%; width: 80px; height: 80px; border-radius: 50%; background: transparent; box-shadow: 15px 15px 0 0 #fdfbd3; filter: drop-shadow(0 0 15px rgba(253, 251, 211, 0.4)); z-index: 10; }
+      
+      @keyframes twinkle { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+      @keyframes shoot { 0% { transform: translateX(0) translateY(0) rotate(-35deg); opacity: 0; } 5% { opacity: 1; } 15% { transform: translateX(-1500px) translateY(1000px) rotate(-35deg); opacity: 0; } 100% { transform: translateX(-1500px) translateY(1000px) rotate(-35deg); opacity: 0; } }
+    `}</style>
+    <div className="stars stars-1"></div>
+    <div className="stars stars-2"></div>
+    <div className="stars stars-3"></div>
+    <div className="meteor m1"></div>
+    <div className="meteor m2"></div>
+    <div className="meteor m3"></div>
+    <div className="moon"></div>
+  </div>
+);
+
 const FlipCard = ({ isFlipped, status }) => {
   return (
     <div className="my-6 relative w-[190px] h-[254px] [perspective:1000px] font-sans">
@@ -9,8 +49,6 @@ const FlipCard = ({ isFlipped, status }) => {
         className="relative w-full h-full text-center transition-transform duration-[800ms] [transform-style:preserve-3d]"
         style={{ transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
       >
-        
-        {/* NEW UIVERSE FRONT: Coral & Bisque Gradient */}
         <div 
           className="absolute inset-0 flex flex-col items-center justify-center w-full h-full [backface-visibility:hidden] border border-[coral] rounded-2xl shadow-[0_8px_14px_0_rgba(0,0,0,0.2)]"
           style={{
@@ -24,14 +62,13 @@ const FlipCard = ({ isFlipped, status }) => {
           </p>
         </div>
 
-        {/* NEW UIVERSE BACK: Dynamic Green/Red Gradients based on Game Status */}
         <div 
           className="absolute inset-0 flex flex-col items-center justify-center w-full h-full [backface-visibility:hidden] rounded-2xl shadow-[0_8px_14px_0_rgba(0,0,0,0.2)]"
           style={{ 
             transform: 'rotateY(180deg)',
             background: status === 'SAFE' 
-              ? 'linear-gradient(120deg, #d1fae5 30%, #10b981 88%, #ecfdf5 40%, #6ee7b7 78%)' // Emerald Slice
-              : 'linear-gradient(120deg, #ffe4e6 30%, #e11d48 88%, #fff1f2 40%, #fda4af 78%)', // Rose Slice
+              ? 'linear-gradient(120deg, #d1fae5 30%, #10b981 88%, #ecfdf5 40%, #6ee7b7 78%)'
+              : 'linear-gradient(120deg, #ffe4e6 30%, #e11d48 88%, #fff1f2 40%, #fda4af 78%)',
             border: status === 'SAFE' ? '1px solid #10b981' : '1px solid #e11d48',
             color: 'white'
           }}
@@ -40,7 +77,6 @@ const FlipCard = ({ isFlipped, status }) => {
             {status === 'SAFE' ? 'SAFE' : 'ELIMINATE'}
           </p>
         </div>
-
       </div>
     </div>
   );
@@ -97,14 +133,19 @@ export default function GameBoard() {
   return (
     <div className="relative flex flex-col items-center justify-center min-h-[100dvh] p-4 bg-[#FAF9F6] font-sans text-slate-800 select-none overflow-x-hidden w-full">
       
+      {/* Renders the night sky ONLY in the lobby */}
+      {phase === 'lobby' && <MidnightSky />}
+      
       {/* --- LOBBY --- */}
       {phase === 'lobby' && (
-        <div className="flex flex-col items-center w-full max-w-sm animate-fade-in py-8">
-          <h1 className="text-3xl font-black tracking-[0.2em] mb-8 uppercase text-slate-800">The Deck</h1>
+        <div className="relative z-10 flex flex-col items-center w-full max-w-sm animate-fade-in py-8">
+          {/* Changed header text to white so it's visible against the stars */}
+          <h1 className="text-3xl font-black tracking-[0.2em] mb-8 uppercase text-white drop-shadow-lg">The Deck</h1>
           
           {availableRecentNames.length > 0 && (
             <div className="w-full mb-6">
-              <p className="text-[10px] text-slate-400 uppercase tracking-widest mb-3 pl-2">Recent Players</p>
+              {/* Changed subtitle text to light grey for visibility */}
+              <p className="text-[10px] text-slate-300 uppercase tracking-widest mb-3 pl-2">Recent Players</p>
               <div className="flex flex-wrap gap-2">
                 {availableRecentNames.slice(0, 6).map(name => (
                   <button 
@@ -162,7 +203,7 @@ export default function GameBoard() {
 
       {/* --- PEEK PHASE --- */}
       {phase === 'peek' && (
-        <div className="flex flex-col items-center w-full animate-fade-in py-6">
+        <div className="relative z-10 flex flex-col items-center w-full animate-fade-in py-6">
           <p className="text-slate-400 uppercase tracking-widest text-[10px] mb-2 font-bold">Current Player</p>
           <h2 className="text-3xl font-black tracking-widest uppercase text-slate-800">{players[0]?.name}</h2>
 
@@ -186,7 +227,7 @@ export default function GameBoard() {
 
       {/* --- CHOICE PHASE --- */}
       {phase === 'choice' && (
-        <div className="flex flex-col items-center w-full animate-fade-in py-6">
+        <div className="relative z-10 flex flex-col items-center w-full animate-fade-in py-6">
           <p className="text-slate-400 uppercase tracking-widest text-[10px] mb-2 font-bold">Challenger</p>
           <h2 className="text-3xl font-black tracking-widest uppercase text-slate-800 mb-2">{players[1]?.name}</h2>
 
@@ -222,7 +263,7 @@ export default function GameBoard() {
 
       {/* --- RESOLUTION PHASE --- */}
       {phase === 'resolution' && roundResult && (
-        <div className="flex flex-col items-center w-full animate-fade-in text-center py-6">
+        <div className="relative z-10 flex flex-col items-center w-full animate-fade-in text-center py-6">
           <FlipCard isFlipped={true} status={cardStatus} />
 
           <div className="mt-4 mb-6 w-full max-w-xs bg-white border border-slate-100 shadow-sm rounded-2xl py-5">
@@ -245,9 +286,7 @@ export default function GameBoard() {
 
       {/* --- GAMEOVER PHASE --- */}
       {phase === 'gameover' && (
-        <div className="flex flex-col items-center animate-fade-in text-center mt-16 w-full">
-          
-          {/* UIVERSE BACK BUTTON */}
+        <div className="relative z-10 flex flex-col items-center animate-fade-in text-center mt-16 w-full">
           <button 
             onClick={() => handleAction(backToLobby)}
             className="group absolute top-6 right-6 flex items-center justify-center h-10 px-3 bg-white border border-slate-200 shadow-sm rounded-lg text-slate-600 font-bold tracking-widest uppercase text-[10px] active:scale-95 active:-translate-y-1 active:shadow-md transition-all duration-200"
