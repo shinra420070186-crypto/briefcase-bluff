@@ -45,7 +45,7 @@ const MidnightSky = () => (
 );
 
 // ==============================================
-// 2. NEW MORNING SKY BACKGROUND (Same Animation Style)
+// 2. MORNING SKY BACKGROUND
 // ==============================================
 const MorningSky = () => (
   <div className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, #4A90E2 0%, #FFB75E 100%)' }}>
@@ -79,7 +79,41 @@ const MorningSky = () => (
 );
 
 // ==============================================
-// 3. GLOBAL STYLES (FAQ, Neon Rule Card, Shine Text, Neon Input, Day/Night Toggle)
+// 3. NEW ACTIVE GAME BACKGROUND (Neon Gradient)
+// ==============================================
+const ActiveGameBackground = () => (
+  <div className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+    <style>{`
+      .animated-gradient-bg {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          -45deg,
+          #00eff8,
+          #f800b4,
+          #ebf503,
+          #02f6c1,
+          #00eff8,
+          #9400f8
+        );
+        background-size: 400% 400%;
+        animation: gradient-move 30s ease infinite;
+      }
+      
+      @keyframes gradient-move {
+        0% { background-position: 0% 50%; }
+        25% { background-position: 50% 100%; }
+        50% { background-position: 100% 50%; }
+        75% { background-position: 50% 0%; }
+        100% { background-position: 0% 50%; }
+      }
+    `}</style>
+    <div className="animated-gradient-bg"></div>
+  </div>
+);
+
+// ==============================================
+// 4. GLOBAL STYLES
 // ==============================================
 const GlobalStyles = () => (
   <style>{`
@@ -135,29 +169,7 @@ const GlobalStyles = () => (
     @keyframes p-rotate { 100% { transform: translate(-50%, -50%) rotate(450deg); } }
 
     /* Day/Night Theme Switch CSS */
-    .theme-switch {
-      --toggle-size: 8px; /* Adjusted to fit nicely on mobile top right */
-      --container-width: 5.625em;
-      --container-height: 2.5em;
-      --container-radius: 6.25em;
-      --container-light-bg: #3D7EAE;
-      --container-night-bg: #1D1F2C;
-      --circle-container-diameter: 3.375em;
-      --sun-moon-diameter: 2.125em;
-      --sun-bg: #ECCA2F;
-      --moon-bg: #C4C9D1;
-      --spot-color: #959DB1;
-      --circle-container-offset: calc((var(--circle-container-diameter) - var(--container-height)) / 2 * -1);
-      --stars-color: #fff;
-      --clouds-color: #F3FDFF;
-      --back-clouds-color: #AACADF;
-      --transition: .5s cubic-bezier(0, -0.02, 0.4, 1.25);
-      --circle-transition: .3s cubic-bezier(0, -0.02, 0.35, 1.17);
-      box-sizing: border-box;
-      font-size: var(--toggle-size);
-      display: block;
-      cursor: pointer;
-    }
+    .theme-switch { --toggle-size: 8px; --container-width: 5.625em; --container-height: 2.5em; --container-radius: 6.25em; --container-light-bg: #3D7EAE; --container-night-bg: #1D1F2C; --circle-container-diameter: 3.375em; --sun-moon-diameter: 2.125em; --sun-bg: #ECCA2F; --moon-bg: #C4C9D1; --spot-color: #959DB1; --circle-container-offset: calc((var(--circle-container-diameter) - var(--container-height)) / 2 * -1); --stars-color: #fff; --clouds-color: #F3FDFF; --back-clouds-color: #AACADF; --transition: .5s cubic-bezier(0, -0.02, 0.4, 1.25); --circle-transition: .3s cubic-bezier(0, -0.02, 0.35, 1.17); box-sizing: border-box; font-size: var(--toggle-size); display: block; cursor: pointer; }
     .theme-switch *, .theme-switch *::before, .theme-switch *::after { box-sizing: border-box; margin: 0; padding: 0; font-size: var(--toggle-size); }
     .theme-switch__container { width: var(--container-width); height: var(--container-height); background-color: var(--container-light-bg); border-radius: var(--container-radius); overflow: hidden; cursor: pointer; box-shadow: 0em -0.062em 0.062em rgba(0, 0, 0, 0.25), 0em 0.062em 0.125em rgba(255, 255, 255, 0.94); transition: var(--transition); position: relative; }
     .theme-switch__container::before { content: ""; position: absolute; z-index: 1; inset: 0; box-shadow: 0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset, 0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset; border-radius: var(--container-radius); }
@@ -170,7 +182,6 @@ const GlobalStyles = () => (
     .theme-switch__spot:nth-last-of-type(3) { width: 0.25em; height: 0.25em; top: 0.312em; left: 0.812em; }
     .theme-switch__clouds { width: 1.25em; height: 1.25em; background-color: var(--clouds-color); border-radius: var(--container-radius); position: absolute; bottom: -0.625em; left: 0.312em; box-shadow: 0.937em 0.312em var(--clouds-color), -0.312em -0.312em var(--back-clouds-color), 1.437em 0.375em var(--clouds-color), 0.5em -0.125em var(--back-clouds-color), 2.187em 0 var(--clouds-color), 1.25em -0.062em var(--back-clouds-color), 2.937em 0.312em var(--clouds-color), 2em -0.312em var(--back-clouds-color), 3.625em -0.062em var(--clouds-color), 2.625em 0em var(--back-clouds-color), 4.5em -0.312em var(--clouds-color), 3.375em -0.437em var(--back-clouds-color), 4.625em -1.75em 0 0.437em var(--clouds-color), 4em -0.625em var(--back-clouds-color), 4.125em -2.125em 0 0.437em var(--back-clouds-color); transition: 0.5s cubic-bezier(0, -0.02, 0.4, 1.25); }
     .theme-switch__stars-container { position: absolute; color: var(--stars-color); top: -100%; left: 0.312em; width: 2.75em; height: auto; transition: var(--transition); }
-    
     .theme-switch__checkbox:checked + .theme-switch__container { background-color: var(--container-night-bg); }
     .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__circle-container { left: calc(100% - var(--circle-container-offset) - var(--circle-container-diameter)); }
     .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__circle-container:hover { left: calc(100% - var(--circle-container-offset) - var(--circle-container-diameter) - 0.187em) }
@@ -182,7 +193,7 @@ const GlobalStyles = () => (
 );
 
 // ==============================================
-// 4. GAME COMPONENTS
+// 5. GAME COMPONENTS
 // ==============================================
 const FlipCard = ({ isFlipped, status }) => {
   return (
@@ -274,7 +285,7 @@ export default function GameBoard() {
     : winStreak;
 
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-[100dvh] p-4 bg-[#FAF9F6] font-sans text-slate-800 select-none overflow-x-hidden w-full">
+    <div className="relative flex flex-col items-center justify-center min-h-[100dvh] p-4 bg-transparent font-sans text-slate-800 select-none overflow-x-hidden w-full">
       
       <GlobalStyles />
 
@@ -297,6 +308,9 @@ export default function GameBoard() {
 
       {/* --- LOBBY BACKGROUND (DAY OR NIGHT) --- */}
       {phase === 'lobby' && (isDayMode ? <MorningSky /> : <MidnightSky />)}
+      
+      {/* --- ACTIVE GAME BACKGROUND (NEON GRADIENT) --- */}
+      {phase !== 'lobby' && <ActiveGameBackground />}
       
       {/* --- LOBBY PHASE --- */}
       {phase === 'lobby' && (
@@ -452,8 +466,8 @@ export default function GameBoard() {
       {/* --- PEEK PHASE --- */}
       {phase === 'peek' && (
         <div className="relative z-10 flex flex-col items-center w-full animate-fade-in py-6">
-          <p className="text-slate-400 uppercase tracking-widest text-[10px] mb-2 font-bold">Current Player</p>
-          <h2 className="text-3xl font-black tracking-widest uppercase text-slate-800">{players[0]?.name}</h2>
+          <p className="text-slate-200 uppercase tracking-widest text-[10px] mb-2 font-bold drop-shadow-md">Current Player</p>
+          <h2 className="text-3xl font-black tracking-widest uppercase text-white drop-shadow-md">{players[0]?.name}</h2>
 
           <div 
             onMouseDown={onHoldStart} onMouseUp={onHoldEnd} onMouseLeave={onHoldEnd}
@@ -476,19 +490,19 @@ export default function GameBoard() {
       {/* --- CHOICE PHASE --- */}
       {phase === 'choice' && (
         <div className="relative z-10 flex flex-col items-center w-full animate-fade-in py-6">
-          <p className="text-slate-400 uppercase tracking-widest text-[10px] mb-2 font-bold">Challenger</p>
-          <h2 className="text-3xl font-black tracking-widest uppercase text-slate-800 mb-2">{players[1]?.name}</h2>
+          <p className="text-slate-200 uppercase tracking-widest text-[10px] mb-2 font-bold drop-shadow-md">Challenger</p>
+          <h2 className="text-3xl font-black tracking-widest uppercase text-white mb-2 drop-shadow-md">{players[1]?.name}</h2>
 
           <FlipCard isFlipped={false} status={cardStatus} />
 
-          <p className="text-slate-400 tracking-widest uppercase text-[10px] mt-6 mb-3 font-bold">Determine Fate</p>
+          <p className="text-slate-200 tracking-widest uppercase text-[10px] mt-6 mb-3 font-bold drop-shadow-md">Determine Fate</p>
 
           <div className="flex w-full max-w-xs gap-4">
             <button 
               onClick={() => handleAction(() => makeChoice('STEAL'), sfx.tap)}
               className="group relative flex-1 p-0 bg-transparent border-none outline-none touch-manipulation cursor-pointer"
             >
-              <span className="absolute inset-0 w-full h-full rounded-2xl bg-black/15 translate-y-[2px] transition-transform duration-300 group-active:translate-y-[1px] group-active:duration-[34ms]"></span>
+              <span className="absolute inset-0 w-full h-full rounded-2xl bg-black/30 translate-y-[2px] transition-transform duration-300 group-active:translate-y-[1px] group-active:duration-[34ms]"></span>
               <span className="absolute inset-0 w-full h-full rounded-2xl bg-[#B8E3E9]"></span>
               <span className="block relative py-5 rounded-2xl bg-white border-2 border-[#B8E3E9] text-slate-800 font-black tracking-widest -translate-y-[4px] transition-transform duration-300 group-active:-translate-y-[2px] group-active:duration-[34ms]">
                 TAKE
@@ -499,7 +513,7 @@ export default function GameBoard() {
               onClick={() => handleAction(() => makeChoice('LEAVE'), sfx.tap)}
               className="group relative flex-1 p-0 bg-transparent border-none outline-none touch-manipulation cursor-pointer"
             >
-              <span className="absolute inset-0 w-full h-full rounded-2xl bg-black/15 translate-y-[2px] transition-transform duration-300 group-active:translate-y-[1px] group-active:duration-[34ms]"></span>
+              <span className="absolute inset-0 w-full h-full rounded-2xl bg-black/30 translate-y-[2px] transition-transform duration-300 group-active:translate-y-[1px] group-active:duration-[34ms]"></span>
               <span className="absolute inset-0 w-full h-full rounded-2xl bg-[#B8E3E9]"></span>
               <span className="block relative py-5 rounded-2xl bg-white border-2 border-[#B8E3E9] text-slate-800 font-black tracking-widest -translate-y-[4px] transition-transform duration-300 group-active:-translate-y-[2px] group-active:duration-[34ms]">
                 PASS
@@ -514,18 +528,18 @@ export default function GameBoard() {
         <div className="relative z-10 flex flex-col items-center w-full animate-fade-in text-center py-6">
           <FlipCard isFlipped={true} status={cardStatus} />
 
-          <div className="mt-4 mb-6 w-full max-w-xs bg-white border border-slate-100 shadow-sm rounded-2xl py-5">
+          <div className="mt-4 mb-6 w-full max-w-xs bg-white/90 backdrop-blur-sm border border-slate-100 shadow-xl rounded-2xl py-5">
             <h2 className="text-3xl font-black text-slate-800 uppercase tracking-widest mb-1">{roundResult.loser.name}</h2>
             <p className="text-rose-500 font-bold tracking-[0.3em] uppercase text-[10px]">Eliminated</p>
-            <div className="h-px w-1/3 bg-slate-100 mx-auto my-3"></div>
-            <p className="text-slate-400 text-[10px] tracking-widest uppercase font-bold">
+            <div className="h-px w-1/3 bg-slate-200 mx-auto my-3"></div>
+            <p className="text-slate-500 text-[10px] tracking-widest uppercase font-bold">
               Win Streak: {displayStreak} / {Math.max(initialRoster.length - 1, 2)}
             </p>
           </div>
 
           <button 
             onClick={() => handleAction(nextRound)}
-            className="w-full max-w-xs py-5 bg-slate-800 text-white rounded-2xl font-black tracking-[0.2em] shadow-xl active:scale-95 transition-transform"
+            className="w-full max-w-xs py-5 bg-slate-900 text-white rounded-2xl font-black tracking-[0.2em] shadow-2xl active:scale-95 transition-transform border border-slate-700"
           >
             NEXT MATCH
           </button>
@@ -538,7 +552,7 @@ export default function GameBoard() {
           
           <button 
             onClick={() => handleAction(backToLobby)}
-            className="group fixed top-6 right-6 flex items-center justify-center h-10 px-3 bg-white border border-slate-200 shadow-sm rounded-lg text-slate-600 font-bold tracking-widest uppercase text-[10px] active:scale-95 active:-translate-y-1 active:shadow-md transition-all duration-200 z-50"
+            className="group fixed top-6 right-6 flex items-center justify-center h-10 px-3 bg-white/90 backdrop-blur-sm border border-slate-200 shadow-lg rounded-lg text-slate-700 font-bold tracking-widest uppercase text-[10px] active:scale-95 active:-translate-y-1 active:shadow-md transition-all duration-200 z-50"
           >
             <svg className="h-4 w-4 mr-1 transition-transform duration-300 group-active:-translate-x-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" fill="currentColor">
               <path d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path>
@@ -546,13 +560,13 @@ export default function GameBoard() {
             BACK
           </button>
 
-          <div className="w-20 h-20 bg-[#B8E3E9] shadow-[0_10px_30px_rgba(184,227,233,0.5)] flex items-center justify-center rounded-full text-3xl mb-6">👑</div>
-          <h2 className="text-4xl font-black text-slate-800 uppercase tracking-widest mb-4">{players[0]?.name}</h2>
-          <p className="text-emerald-500 font-bold tracking-[0.3em] mb-16 uppercase text-xs">Game Champion</p>
+          <div className="w-24 h-24 bg-white/20 backdrop-blur-md shadow-[0_10px_40px_rgba(255,255,255,0.4)] flex items-center justify-center rounded-full text-5xl mb-6 border-2 border-white/50">👑</div>
+          <h2 className="text-5xl font-black text-white uppercase tracking-widest mb-4 drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]">{players[0]?.name}</h2>
+          <p className="text-[#00eff8] font-black tracking-[0.4em] mb-16 uppercase text-sm drop-shadow-md">Game Champion</p>
           
           <button 
             onClick={() => handleAction(playAgain)}
-            className="px-8 py-4 bg-white border-2 border-slate-200 shadow-md rounded-2xl text-slate-800 font-bold tracking-[0.2em] active:bg-slate-50 transition-colors"
+            className="px-10 py-5 bg-white border-2 border-[#00eff8] shadow-[0_0_20px_rgba(0,239,248,0.5)] rounded-2xl text-slate-900 font-black tracking-[0.2em] active:scale-95 transition-all"
           >
             PLAY AGAIN
           </button>
