@@ -13,8 +13,6 @@ const FlipCard = ({ isFlipped, status }) => {
           transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' 
         }}
       >
-        
-        {/* Front of Card: Premium Ivory */}
         <div 
           className="absolute inset-0 w-full h-full bg-white rounded-3xl border-2 border-[#B8E3E9] shadow-[0_15px_35px_rgba(0,0,0,0.06)] flex flex-col items-center justify-center overflow-hidden"
           style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
@@ -27,7 +25,6 @@ const FlipCard = ({ isFlipped, status }) => {
            </p>
         </div>
 
-        {/* Back of Card */}
         <div 
           className="absolute inset-0 w-full h-full rounded-3xl flex items-center justify-center shadow-[0_15px_35px_rgba(0,0,0,0.12)] overflow-hidden bg-white"
           style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
@@ -42,7 +39,6 @@ const FlipCard = ({ isFlipped, status }) => {
             </div>
           )}
         </div>
-
       </div>
     </div>
   );
@@ -52,7 +48,7 @@ export default function GameBoard() {
   const { 
     phase, players, winStreak, initialRoster, recentNames,
     startGame, goToChoicePhase, makeChoice, nextRound, addPlayer, removePlayer, cardStatus, roundResult,
-    playAgain
+    playAgain, backToLobby
   } = useGameStore();
 
   const [newPlayerName, setNewPlayerName] = useState('');
@@ -97,7 +93,7 @@ export default function GameBoard() {
     : winStreak;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[100dvh] p-4 bg-[#FAF9F6] font-sans text-slate-800 select-none overflow-x-hidden w-full">
+    <div className="relative flex flex-col items-center justify-center min-h-[100dvh] p-4 bg-[#FAF9F6] font-sans text-slate-800 select-none overflow-x-hidden w-full">
       
       {/* --- LOBBY --- */}
       {phase === 'lobby' && (
@@ -154,14 +150,11 @@ export default function GameBoard() {
             <div className={`absolute inset-0 flex items-center justify-center z-0 transition-opacity duration-500 ${players.length < 2 ? 'opacity-0' : 'opacity-100'}`}>
               <div 
                 className="w-[20rem] h-[20rem] rounded-full blur-[20px] animate-[spin_3s_linear_infinite] opacity-60"
-                style={{
-                  background: 'linear-gradient(90deg, rgba(222, 0, 75, 1) 0%, rgba(191, 70, 255, 1) 49%, rgba(0, 212, 255, 1) 100%)'
-                }}
+                style={{ background: 'linear-gradient(90deg, rgba(222, 0, 75, 1) 0%, rgba(191, 70, 255, 1) 49%, rgba(0, 212, 255, 1) 100%)' }}
               ></div>
             </div>
             <span className="relative z-10 transition-colors duration-300 drop-shadow-sm">START MATCH</span>
           </button>
-
         </div>
       )}
 
@@ -200,37 +193,27 @@ export default function GameBoard() {
           <p className="text-slate-400 tracking-widest uppercase text-[10px] mt-6 mb-3 font-bold">Determine Fate</p>
 
           <div className="flex w-full max-w-xs gap-4">
-            
-            {/* UIVERSE 3D 'TAKE' BUTTON */}
             <button 
               onClick={() => handleAction(() => makeChoice('STEAL'), sfx.tap)}
               className="group relative flex-1 p-0 bg-transparent border-none outline-none touch-manipulation cursor-pointer"
             >
-              {/* Shadow Layer */}
               <span className="absolute inset-0 w-full h-full rounded-2xl bg-black/15 translate-y-[2px] transition-transform duration-300 group-active:translate-y-[1px] group-active:duration-[34ms]"></span>
-              {/* 3D Edge Layer (Pastel Blue) */}
               <span className="absolute inset-0 w-full h-full rounded-2xl bg-[#B8E3E9]"></span>
-              {/* Front Layer */}
               <span className="block relative py-5 rounded-2xl bg-white border-2 border-[#B8E3E9] text-slate-800 font-black tracking-widest -translate-y-[4px] transition-transform duration-300 group-active:-translate-y-[2px] group-active:duration-[34ms]">
                 TAKE
               </span>
             </button>
 
-            {/* UIVERSE 3D 'PASS' BUTTON */}
             <button 
               onClick={() => handleAction(() => makeChoice('LEAVE'), sfx.tap)}
               className="group relative flex-1 p-0 bg-transparent border-none outline-none touch-manipulation cursor-pointer"
             >
-               {/* Shadow Layer */}
               <span className="absolute inset-0 w-full h-full rounded-2xl bg-black/15 translate-y-[2px] transition-transform duration-300 group-active:translate-y-[1px] group-active:duration-[34ms]"></span>
-              {/* 3D Edge Layer (Pastel Blue) */}
               <span className="absolute inset-0 w-full h-full rounded-2xl bg-[#B8E3E9]"></span>
-              {/* Front Layer */}
               <span className="block relative py-5 rounded-2xl bg-white border-2 border-[#B8E3E9] text-slate-800 font-black tracking-widest -translate-y-[4px] transition-transform duration-300 group-active:-translate-y-[2px] group-active:duration-[34ms]">
                 PASS
               </span>
             </button>
-
           </div>
         </div>
       )}
@@ -238,7 +221,6 @@ export default function GameBoard() {
       {/* --- RESOLUTION PHASE --- */}
       {phase === 'resolution' && roundResult && (
         <div className="flex flex-col items-center w-full animate-fade-in text-center py-6">
-          
           <FlipCard isFlipped={true} status={cardStatus} />
 
           <div className="mt-4 mb-6 w-full max-w-xs bg-white border border-slate-100 shadow-sm rounded-2xl py-5">
@@ -261,7 +243,24 @@ export default function GameBoard() {
 
       {/* --- GAMEOVER PHASE --- */}
       {phase === 'gameover' && (
-        <div className="flex flex-col items-center animate-fade-in text-center mt-16">
+        <div className="flex flex-col items-center animate-fade-in text-center mt-16 w-full">
+          
+          {/* UIVERSE BACK BUTTON */}
+          <button 
+            onClick={() => handleAction(backToLobby)}
+            className="group absolute top-6 right-6 flex items-center justify-center h-10 px-3 bg-white border border-slate-200 shadow-sm rounded-lg text-slate-600 font-bold tracking-widest uppercase text-[10px] active:scale-95 active:-translate-y-1 active:shadow-md transition-all duration-200"
+          >
+            <svg 
+              className="h-4 w-4 mr-1 transition-transform duration-300 group-active:-translate-x-1" 
+              xmlns="http://www.w3.org/2000/svg" 
+              viewBox="0 0 1024 1024" 
+              fill="currentColor"
+            >
+              <path d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path>
+            </svg>
+            BACK
+          </button>
+
           <div className="w-20 h-20 bg-[#B8E3E9] shadow-[0_10px_30px_rgba(184,227,233,0.5)] flex items-center justify-center rounded-full text-3xl mb-6">👑</div>
           <h2 className="text-4xl font-black text-slate-800 uppercase tracking-widest mb-4">{players[0]?.name}</h2>
           <p className="text-emerald-500 font-bold tracking-[0.3em] mb-16 uppercase text-xs">Game Champion</p>
