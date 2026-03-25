@@ -417,4 +417,79 @@ export default function GameBoard() {
               className="group relative flex-1 p-0 bg-transparent border-none outline-none touch-manipulation cursor-pointer"
             >
               <span className="absolute inset-0 w-full h-full rounded-2xl bg-black/15 translate-y-[2px] transition-transform duration-300 group-active:translate-y-[1px] group-active:duration-[34ms]"></span>
-              <span className="absolute inset-0 w-full h-full rounded-2xl bg-[#B
+              <span className="absolute inset-0 w-full h-full rounded-2xl bg-[#B8E3E9]"></span>
+              <span className="block relative py-5 rounded-2xl bg-white border-2 border-[#B8E3E9] text-slate-800 font-black tracking-widest -translate-y-[4px] transition-transform duration-300 group-active:-translate-y-[2px] group-active:duration-[34ms]">
+                TAKE
+              </span>
+            </button>
+
+            <button 
+              onClick={() => handleAction(() => makeChoice('LEAVE'), sfx.tap)}
+              className="group relative flex-1 p-0 bg-transparent border-none outline-none touch-manipulation cursor-pointer"
+            >
+              <span className="absolute inset-0 w-full h-full rounded-2xl bg-black/15 translate-y-[2px] transition-transform duration-300 group-active:translate-y-[1px] group-active:duration-[34ms]"></span>
+              <span className="absolute inset-0 w-full h-full rounded-2xl bg-[#B8E3E9]"></span>
+              <span className="block relative py-5 rounded-2xl bg-white border-2 border-[#B8E3E9] text-slate-800 font-black tracking-widest -translate-y-[4px] transition-transform duration-300 group-active:-translate-y-[2px] group-active:duration-[34ms]">
+                PASS
+              </span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* --- RESOLUTION PHASE --- */}
+      {phase === 'resolution' && roundResult && (
+        <div className="relative z-10 flex flex-col items-center w-full animate-fade-in text-center py-6">
+          <FlipCard isFlipped={true} status={cardStatus} />
+
+          <div className="mt-4 mb-6 w-full max-w-xs bg-white border border-slate-100 shadow-sm rounded-2xl py-5">
+            <h2 className="text-3xl font-black text-slate-800 uppercase tracking-widest mb-1">{roundResult.loser.name}</h2>
+            <p className="text-rose-500 font-bold tracking-[0.3em] uppercase text-[10px]">Eliminated</p>
+            <div className="h-px w-1/3 bg-slate-100 mx-auto my-3"></div>
+            <p className="text-slate-400 text-[10px] tracking-widest uppercase font-bold">
+              Win Streak: {displayStreak} / {Math.max(initialRoster.length - 1, 2)}
+            </p>
+          </div>
+
+          <button 
+            onClick={() => handleAction(nextRound)}
+            className="w-full max-w-xs py-5 bg-slate-800 text-white rounded-2xl font-black tracking-[0.2em] shadow-xl active:scale-95 transition-transform"
+          >
+            NEXT MATCH
+          </button>
+        </div>
+      )}
+
+      {/* --- GAMEOVER PHASE --- */}
+      {phase === 'gameover' && (
+        <div className="relative z-10 flex flex-col items-center animate-fade-in text-center mt-16 w-full">
+          <button 
+            onClick={() => handleAction(backToLobby)}
+            className="group absolute top-6 right-6 flex items-center justify-center h-10 px-3 bg-white border border-slate-200 shadow-sm rounded-lg text-slate-600 font-bold tracking-widest uppercase text-[10px] active:scale-95 active:-translate-y-1 active:shadow-md transition-all duration-200"
+          >
+            <svg 
+              className="h-4 w-4 mr-1 transition-transform duration-300 group-active:-translate-x-1" 
+              xmlns="http://www.w3.org/2000/svg" 
+              viewBox="0 0 1024 1024" 
+              fill="currentColor"
+            >
+              <path d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path>
+            </svg>
+            BACK
+          </button>
+
+          <div className="w-20 h-20 bg-[#B8E3E9] shadow-[0_10px_30px_rgba(184,227,233,0.5)] flex items-center justify-center rounded-full text-3xl mb-6">👑</div>
+          <h2 className="text-4xl font-black text-slate-800 uppercase tracking-widest mb-4">{players[0]?.name}</h2>
+          <p className="text-emerald-500 font-bold tracking-[0.3em] mb-16 uppercase text-xs">Game Champion</p>
+          
+          <button 
+            onClick={() => handleAction(playAgain)}
+            className="px-8 py-4 bg-white border-2 border-slate-200 shadow-md rounded-2xl text-slate-800 font-bold tracking-[0.2em] active:bg-slate-50 transition-colors"
+          >
+            PLAY AGAIN
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
