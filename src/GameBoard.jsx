@@ -92,8 +92,6 @@ export default function GameBoard() {
 
   const availableRecentNames = recentNames.filter(n => !players.some(p => p.name === n));
 
-  // FIX: Compute correct displayed streak — the store already holds the correct value,
-  // but during resolution we want to show what it WILL BE after nextRound resolves.
   const displayStreak = roundResult
     ? (roundResult.p1Lost ? 1 : winStreak + 1)
     : winStreak;
@@ -144,13 +142,21 @@ export default function GameBoard() {
             ))}
           </div>
 
+          {/* NEW UIVERSE ANIMATED BUTTON */}
           <button 
             onClick={() => handleAction(startGame)}
             disabled={players.length < 2}
-            className="w-full py-5 bg-slate-800 text-white rounded-2xl font-black text-lg tracking-[0.2em] shadow-xl disabled:opacity-30 active:scale-95 transition-all"
+            className="relative group w-full py-5 bg-slate-800 hover:bg-[#B8E3E9] text-white hover:text-slate-900 rounded-2xl font-black text-lg tracking-[0.2em] shadow-xl disabled:opacity-30 disabled:pointer-events-none active:scale-[0.97] transition-all duration-300 overflow-hidden"
           >
-            START MATCH
+            {/* The Spinning Glow Effect */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+              <div className="w-[15rem] h-[15rem] bg-gradient-to-r from-[#B8E3E9] via-slate-300 to-white rounded-full blur-[20px] opacity-20 group-hover:w-[12rem] group-hover:h-[12rem] group-hover:opacity-60 transition-all duration-500 animate-[spin_3s_linear_infinite]"></div>
+            </div>
+
+            {/* Button Text */}
+            <span className="relative z-10 transition-colors duration-300">START MATCH</span>
           </button>
+
         </div>
       )}
 
@@ -215,7 +221,6 @@ export default function GameBoard() {
             <h2 className="text-3xl font-black text-slate-800 uppercase tracking-widest mb-1">{roundResult.loser.name}</h2>
             <p className="text-rose-500 font-bold tracking-[0.3em] uppercase text-[10px]">Eliminated</p>
             <div className="h-px w-1/3 bg-slate-100 mx-auto my-3"></div>
-            {/* FIX: Use pre-computed displayStreak instead of fragile inline logic */}
             <p className="text-slate-400 text-[10px] tracking-widest uppercase font-bold">
               Win Streak: {displayStreak} / {Math.max(initialRoster.length - 1, 2)}
             </p>
@@ -237,7 +242,6 @@ export default function GameBoard() {
           <h2 className="text-4xl font-black text-slate-800 uppercase tracking-widest mb-4">{players[0]?.name}</h2>
           <p className="text-emerald-500 font-bold tracking-[0.3em] mb-16 uppercase text-xs">Game Champion</p>
           
-          {/* FIX: Use playAgain from store (reshuffles) instead of window.location.reload() */}
           <button 
             onClick={() => handleAction(playAgain)}
             className="px-8 py-4 bg-white border-2 border-slate-200 shadow-md rounded-2xl text-slate-800 font-bold tracking-[0.2em] active:bg-slate-50 transition-colors"
