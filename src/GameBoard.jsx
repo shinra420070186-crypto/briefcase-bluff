@@ -6,7 +6,7 @@ import { sfx } from './sfx';
 // 1. ALL CSS STYLES (STATIC TO PREVENT ANIMATION GLITCHES)
 // ==============================================
 const GAME_STYLES = `
-  /* Night Sky */
+  /* Night Sky Elements */
   .stars { position: absolute; inset: 0; background-repeat: repeat; pointer-events: none; }
   .stars-1 { background-image: radial-gradient(1px 1px at 10% 10%, #fff, transparent), radial-gradient(1px 1px at 30% 20%, #fff, transparent), radial-gradient(1px 1px at 50% 50%, #fff, transparent), radial-gradient(1px 1px at 70% 30%, #fff, transparent), radial-gradient(1px 1px at 90% 10%, #fff, transparent); background-size: 100px 100px; animation: twinkle 3s ease-in-out infinite; }
   .stars-2 { background-image: radial-gradient(1.5px 1.5px at 20% 40%, #fff, transparent), radial-gradient(1.5px 1.5px at 60% 85%, #fff, transparent), radial-gradient(1.5px 1.5px at 85% 65%, #fff, transparent); background-size: 150px 150px; animation: twinkle 5s ease-in-out infinite 1s; }
@@ -20,7 +20,7 @@ const GAME_STYLES = `
   @keyframes twinkle { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
   @keyframes shoot { 0% { transform: translateX(0) translateY(0) rotate(-35deg); opacity: 0; } 5% { opacity: 1; } 15% { transform: translateX(-1500px) translateY(1000px) rotate(-35deg); opacity: 0; } 100% { transform: translateX(-1500px) translateY(1000px) rotate(-35deg); opacity: 0; } }
 
-  /* Morning Sky */
+  /* Morning Sky Elements */
   .motes { position: absolute; inset: 0; background-repeat: repeat; pointer-events: none; }
   .motes-1 { background-image: radial-gradient(1.5px 1.5px at 15% 15%, rgba(255,255,255,0.7), transparent), radial-gradient(1.5px 1.5px at 35% 25%, rgba(255,255,255,0.7), transparent), radial-gradient(1.5px 1.5px at 55% 55%, rgba(255,255,255,0.7), transparent), radial-gradient(1.5px 1.5px at 75% 35%, rgba(255,255,255,0.7), transparent), radial-gradient(1.5px 1.5px at 95% 15%, rgba(255,255,255,0.7), transparent); background-size: 100px 100px; animation: twinkle 4s ease-in-out infinite; }
   .motes-2 { background-image: radial-gradient(2px 2px at 25% 45%, rgba(255,255,255,0.5), transparent), radial-gradient(2px 2px at 65% 85%, rgba(255,255,255,0.5), transparent), radial-gradient(2px 2px at 85% 70%, rgba(255,255,255,0.5), transparent); background-size: 150px 150px; animation: twinkle 6s ease-in-out infinite 2s; }
@@ -31,14 +31,14 @@ const GAME_STYLES = `
   .sun { position: absolute; top: 15%; right: 15%; width: 50px; height: 50px; border-radius: 50%; background: #FFD700; box-shadow: 0 0 40px 15px rgba(255, 215, 0, 0.5); z-index: 10; }
   @keyframes breeze { 0% { transform: translateX(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateX(-1500px); opacity: 0; } }
 
-  /* Pastel Glow Background */
+  /* Pastel Glow Background (Active Game) */
   .pastel-container { position: relative; width: 100%; height: 100%; overflow: hidden; background: radial-gradient(circle, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.1)); }
   .pastel-container::before, .pastel-container::after { content: ""; position: absolute; top: 50%; left: 50%; width: 200%; height: 200%; background: conic-gradient(from 0deg, #ff9aa2, #ffb7b2, #ffdac1, #e2f0cb, #a2e4ff, #c9afff, #ffb7b2, #ff9aa2); transform: translate(-50%, -50%); animation: rotate-pastel 8s linear infinite; filter: blur(50px); opacity: 0.8; }
   .pastel-container::after { width: 180%; height: 180%; animation: rotate-pastel-reverse 10s linear infinite; opacity: 0.6; }
   @keyframes rotate-pastel { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
   @keyframes rotate-pastel-reverse { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(-360deg); } }
 
-  /* Burger Button CSS */
+  /* Burger Menu */
   .burger { position: relative; width: 30px; height: 22px; background: transparent; cursor: pointer; display: block; z-index: 60; }
   .burger input { display: none; }
   .burger span { display: block; position: absolute; height: 3px; width: 100%; background: #fff; border-radius: 9px; opacity: 1; left: 0; transform: rotate(0deg); transition: .25s ease-in-out; box-shadow: 0 1px 3px rgba(0,0,0,0.5); }
@@ -49,7 +49,7 @@ const GAME_STYLES = `
   .burger input:checked ~ span:nth-of-type(2) { width: 0%; opacity: 0; }
   .burger input:checked ~ span:nth-of-type(3) { transform: rotate(-45deg); top: 21px; left: 5px; }
 
-  /* Kamehame-ha Rule Cards CSS */
+  /* Rule Cards */
   .cards { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 280px; }
   .cards .red { background-color: #f43f5e; }
   .cards .blue { background-color: #3b82f6; }
@@ -62,7 +62,7 @@ const GAME_STYLES = `
   .cards .card:hover p.second-text, .cards .card:focus p.second-text { opacity: 1; max-height: 50px; margin-top: 8px; }
   .cards:hover > .card:not(:hover), .cards:focus-within > .card:not(:focus) { filter: blur(4px); transform: scale(0.95, 0.95); opacity: 0.7; }
 
-  /* Magic Card CSS */
+  /* Magic Flip Card */
   .magic-card { background: var(--bg-gradient, linear-gradient(to left, #f7ba2b 0%, #ea5358 100%)); width: 100%; height: 100%; padding: 5px; border-radius: 1rem; overflow: visible; position: relative; z-index: 1; }
   .magic-card::after { position: absolute; content: ""; top: 30px; left: 0; right: 0; z-index: -1; height: 100%; width: 100%; transform: scale(0.8); filter: blur(25px); background: var(--bg-gradient, linear-gradient(to left, #f7ba2b 0%, #ea5358 100%)); transition: opacity .5s; }
   .magic-card-info { background: #181818; color: #ffffff; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 100%; overflow: hidden; border-radius: .7rem; }
@@ -76,11 +76,11 @@ const GAME_STYLES = `
   .neon-btn-half { width: 140px; height: 62px; }
   .neon-btn-wide { width: 100%; max-width: 320px; height: 62px; margin-top: 1rem; }
 
-  /* Shine Text CSS */
+  /* Shine Text Animation (The Deck) */
   .shine-text { color: rgba(255, 255, 255, 0.3); background: #222 -webkit-gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.5, #fff)) 0 0 no-repeat; background-image: -webkit-linear-gradient(-40deg, transparent 0%, transparent 40%, #fff 50%, transparent 60%, transparent 100%); -webkit-background-clip: text; -webkit-background-size: 50px; -webkit-animation: zezzz 5s infinite; }
   @-webkit-keyframes zezzz { 0%, 10% { background-position: -200px; } 20% { background-position: top left; } 100% { background-position: 200px; } }
 
-  /* Neon Animated Input CSS */
+  /* Poda Input */
   .poda { display: flex; align-items: center; justify-content: center; position: relative; width: 100%; max-width: 314px; margin: 0 auto; }
   .poda-input { background-color: #010201; border: none; width: 100%; height: 56px; border-radius: 10px; color: white; padding-inline: 59px; font-size: 16px; font-weight: bold; }
   .poda-input::placeholder { color: #5a545a; font-weight: normal; }
@@ -106,7 +106,7 @@ const GAME_STYLES = `
   .poda-search-icon { position: absolute; left: 20px; top: 15px; pointer-events: none; }
   @keyframes p-rotate { 100% { transform: translate(-50%, -50%) rotate(450deg); } }
 
-  /* Day/Night Theme Switch CSS */
+  /* Day/Night Theme Switch */
   .theme-switch { --toggle-size: 8px; --container-width: 5.625em; --container-height: 2.5em; --container-radius: 6.25em; --container-light-bg: #3D7EAE; --container-night-bg: #1D1F2C; --circle-container-diameter: 3.375em; --sun-moon-diameter: 2.125em; --sun-bg: #ECCA2F; --moon-bg: #C4C9D1; --spot-color: #959DB1; --circle-container-offset: calc((var(--circle-container-diameter) - var(--container-height)) / 2 * -1); --stars-color: #fff; --clouds-color: #F3FDFF; --back-clouds-color: #AACADF; --transition: .5s cubic-bezier(0, -0.02, 0.4, 1.25); --circle-transition: .3s cubic-bezier(0, -0.02, 0.35, 1.17); box-sizing: border-box; font-size: var(--toggle-size); display: block; cursor: pointer; }
   .theme-switch *, .theme-switch *::before, .theme-switch *::after { box-sizing: border-box; margin: 0; padding: 0; font-size: var(--toggle-size); }
   .theme-switch__container { width: var(--container-width); height: var(--container-height); background-color: var(--container-light-bg); border-radius: var(--container-radius); overflow: hidden; cursor: pointer; box-shadow: 0em -0.062em 0.062em rgba(0, 0, 0, 0.25), 0em 0.062em 0.125em rgba(255, 255, 255, 0.94); transition: var(--transition); position: relative; }
@@ -118,8 +118,6 @@ const GAME_STYLES = `
   .theme-switch__spot { position: absolute; top: 0.75em; left: 0.312em; width: 0.75em; height: 0.75em; border-radius: var(--container-radius); background-color: var(--spot-color); box-shadow: 0em 0.0312em 0.062em rgba(0, 0, 0, 0.25) inset; }
   .theme-switch__spot:nth-of-type(2) { width: 0.375em; height: 0.375em; top: 0.937em; left: 1.375em; }
   .theme-switch__spot:nth-last-of-type(3) { width: 0.25em; height: 0.25em; top: 0.312em; left: 0.812em; }
-  .theme-switch__clouds { width: 1.25em; height: 1.25em; background-color: var(--clouds-color); border-radius: var(--container-radius); position: absolute; bottom: -0.625em; left: 0.312em; box-shadow: 0.937em 0.312em var(--clouds-color), -0.312em -0.312em var(--back-clouds-color), 1.437em 0.375em var(--clouds-color), 0.5em -0.125em var(--back-clouds-color), 2.187em 0 var(--clouds-color), 1.25em -0.062em var(--back-clouds-color), 2.937em 0.312em var(--clouds-color), 2em -0.312em var(--back-clouds-color), 3.625em -0.062em var(--clouds-color), 2.625em 0em var(--back-clouds-color), 4.5em -0.312em var(--clouds-color), 3.375em -0.437em var(--back-clouds-color), 4.625em -1.75em 0 0.437em var(--clouds-color), 4em -0.625em var(--back-clouds-color), 4.125em -2.125em 0 0.437em var(--back-clouds-color); transition: 0.5s cubic-bezier(0, -0.02, 0.4, 1.25); }
-  .theme-switch__stars-container { position: absolute; color: var(--stars-color); top: -100%; left: 0.312em; width: 2.75em; height: auto; transition: var(--transition); }
   .theme-switch__checkbox:checked + .theme-switch__container { background-color: var(--container-night-bg); }
   .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__circle-container { left: calc(100% - var(--circle-container-offset) - var(--circle-container-diameter)); }
   .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__circle-container:hover { left: calc(100% - var(--circle-container-offset) - var(--circle-container-diameter) - 0.187em) }
@@ -130,16 +128,37 @@ const GAME_STYLES = `
 `;
 
 // ==============================================
-// 2. COMPONENTS
+// 2. BACKGROUND COMPONENTS
 // ==============================================
+
+// Smooth Cross-Fade Wrapper for the Lobby Skies
+const LobbySky = ({ isDayMode }) => (
+  <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
+    {/* Night Sky - Fades Out in Day Mode */}
+    <div className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${isDayMode ? 'opacity-0' : 'opacity-100'}`}>
+      <MidnightSky />
+    </div>
+    
+    {/* Morning Sky - Fades In in Day Mode */}
+    <div className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${isDayMode ? 'opacity-100' : 'opacity-0'}`}>
+      <MorningSky />
+    </div>
+  </div>
+);
+
 const PastelGlowBackground = () => (
   <div className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none" style={{ background: 'linear-gradient(135deg, #ffe8f3, #d9f3ff)' }}>
     <div className="pastel-container"></div>
   </div>
 );
 
+// ==============================================
+// 3. GAME COMPONENTS (MAGIC FLIP CARD)
+// ==============================================
 const FlipCard = ({ isFlipped, status }) => {
   const isSafe = status === 'SAFE';
+
+  // Dynamic Gradients for the Magic Card Background and Shadow
   const deckGradient = 'linear-gradient(to left, #f7ba2b 0%, #ea5358 100%)';
   const safeGradient = 'linear-gradient(to left, #00b09b, #96c93d)';
   const elimGradient = 'linear-gradient(to left, #ff416c, #ff4b2b)';
@@ -150,6 +169,7 @@ const FlipCard = ({ isFlipped, status }) => {
         className="relative w-full h-full text-center transition-transform duration-[600ms] [transform-style:preserve-3d]"
         style={{ transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
       >
+        {/* --- BACK SIDE (Cover Side / THE DECK) --- */}
         <div className="absolute w-full h-full [backface-visibility:hidden]">
           <div className="magic-card" style={{ '--bg-gradient': deckGradient }}>
             <div className="magic-card-info">
@@ -161,6 +181,7 @@ const FlipCard = ({ isFlipped, status }) => {
           </div>
         </div>
 
+        {/* --- FRONT SIDE (Revealed Side / SAFE or ELIMINATE) --- */}
         <div className="absolute w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)]">
           <div className="magic-card" style={{ '--bg-gradient': isSafe ? safeGradient : elimGradient }}>
             <div className="magic-card-info">
@@ -173,11 +194,15 @@ const FlipCard = ({ isFlipped, status }) => {
             </div>
           </div>
         </div>
+
       </div>
     </div>
   );
 };
 
+// ==============================================
+// 4. MAIN GAME BOARD
+// ==============================================
 export default function GameBoard() {
   const { 
     phase, players, winStreak, initialRoster, recentNames,
@@ -202,13 +227,14 @@ export default function GameBoard() {
     if (actionCallback) actionCallback();
   };
 
+  // Delayed action for button animations
   const handleDelayedAction = (actionCallback, soundEffect = sfx.tap) => {
     sfx.init();
     if (soundEffect) soundEffect.bind(sfx)();
     if (actionCallback) {
       setTimeout(() => {
         actionCallback();
-      }, 200); 
+      }, 200); // 200ms delay allowing CSS :active states to show
     }
   };
 
@@ -240,10 +266,10 @@ export default function GameBoard() {
   return (
     <div className="relative flex flex-col items-center justify-center min-h-[100dvh] p-4 bg-transparent font-sans text-slate-800 select-none overflow-x-hidden w-full">
       
-      {/* STATIC STYLESHEET TO PREVENT GLITCHES */}
+      {/* GLOBAL CSS INJECTION (STATIC) */}
       <style dangerouslySetInnerHTML={{ __html: GAME_STYLES }} />
 
-      {/* --- KAMEHAME-HA RULE CARDS OVERLAY --- */}
+      {/* --- RULE CARDS MODAL OVERLAY --- */}
       {showRules && (
         <div className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
           <div className="cards mt-12">
@@ -269,7 +295,7 @@ export default function GameBoard() {
 
       {/* --- DYNAMIC BACKGROUND HANDLING --- */}
       {phase === 'lobby' ? (
-        isDayMode ? <MorningSky /> : <MidnightSky />
+        <LobbySky isDayMode={isDayMode} /> 
       ) : (
         <PastelGlowBackground />
       )}
@@ -277,6 +303,7 @@ export default function GameBoard() {
       {/* --- LOBBY PHASE --- */}
       {phase === 'lobby' && (
         <>
+          {/* BURGER / CROSS MENU (FIXED TOP LEFT) */}
           <div className="fixed top-6 left-6 z-[60]">
             <label className="burger" htmlFor="burger">
               <input 
@@ -291,6 +318,7 @@ export default function GameBoard() {
             </label>
           </div>
 
+          {/* DAY/NIGHT TOGGLE SWITCH (FIXED TOP RIGHT) */}
           <div className="fixed top-6 right-6 z-40 shadow-xl rounded-full">
             <label className="theme-switch" htmlFor="theme-switch-toggle">
               <input 
@@ -329,6 +357,7 @@ export default function GameBoard() {
               The Deck
             </h1>
             
+            {/* NEON ANIMATED INPUT */}
             <div className="w-full mb-10 flex justify-center">
               <div className="poda">
                 <div className="poda-glow"></div>
