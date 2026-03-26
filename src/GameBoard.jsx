@@ -79,7 +79,7 @@ const MorningSky = () => (
 );
 
 // ==============================================
-// 3. NEW ACTIVE GAME SKY (TWILIGHT)
+// 3. ACTIVE GAME SKY (TWILIGHT)
 // ==============================================
 const TwilightSky = () => (
   <div className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, #2B1055 0%, #7597DE 100%)' }}>
@@ -426,6 +426,36 @@ const GlobalStyles = () => (
       transform: translateX(200%);
       transition-delay: 300ms;
     }
+
+    /* ====================================================
+       NEW: TIAGOADAG GLOWING FLIP CARD CSS
+       ==================================================== */
+    .tiago-card {
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tiago-card2 {
+      width: 100%;
+      height: 100%;
+      background-color: #1a1a1a;
+      border-radius: 20px;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* The "active" class acts as our programmatic hover */
+    .tiago-card2.active {
+      transform: scale(0.98);
+    }
   `}</style>
 );
 
@@ -433,37 +463,53 @@ const GlobalStyles = () => (
 // 5. GAME COMPONENTS
 // ==============================================
 const FlipCard = ({ isFlipped, status }) => {
+  const isSafe = status === 'SAFE';
+  
   return (
     <div className="my-6 relative w-[190px] h-[254px] [perspective:1000px] font-sans">
       <div 
         className="relative w-full h-full text-center transition-transform duration-[800ms] [transform-style:preserve-3d]"
         style={{ transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
       >
-        <div 
-          className="absolute inset-0 flex flex-col items-center justify-center w-full h-full [backface-visibility:hidden] border border-[coral] rounded-2xl shadow-[0_8px_14px_0_rgba(0,0,0,0.2)]"
-          style={{ background: 'linear-gradient(120deg, bisque 60%, rgb(255, 231, 222) 88%, rgb(255, 211, 195) 40%, rgba(255, 127, 80, 0.603) 48%)', color: 'coral' }}
-        >
-          <p className="text-2xl font-black tracking-widest m-0 uppercase">THE DECK</p>
-          <p className="mt-2 font-bold tracking-[0.2em] text-[10px] uppercase opacity-80">
-            {isFlipped ? 'Revealing...' : 'Hold to View'}
-          </p>
+        {/* FRONT OF CARD (Dormant State) */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center w-full h-full [backface-visibility:hidden]">
+          <div className="tiago-card bg-[#222]">
+            <div className="tiago-card2">
+              <p className="text-2xl font-black tracking-widest m-0 uppercase text-slate-500">THE DECK</p>
+              <p className="mt-2 font-bold tracking-[0.2em] text-[10px] uppercase text-slate-600">
+                {isFlipped ? 'Revealing...' : 'Hold to View'}
+              </p>
+            </div>
+          </div>
         </div>
 
+        {/* BACK OF CARD (Glowing Active State) */}
         <div 
-          className="absolute inset-0 flex flex-col items-center justify-center w-full h-full [backface-visibility:hidden] rounded-2xl shadow-[0_8px_14px_0_rgba(0,0,0,0.2)]"
-          style={{ 
-            transform: 'rotateY(180deg)',
-            background: status === 'SAFE' 
-              ? 'linear-gradient(120deg, #d1fae5 30%, #10b981 88%, #ecfdf5 40%, #6ee7b7 78%)'
-              : 'linear-gradient(120deg, #ffe4e6 30%, #e11d48 88%, #fff1f2 40%, #fda4af 78%)',
-            border: status === 'SAFE' ? '1px solid #10b981' : '1px solid #e11d48',
-            color: 'white'
-          }}
+          className="absolute inset-0 flex flex-col items-center justify-center w-full h-full [backface-visibility:hidden]"
+          style={{ transform: 'rotateY(180deg)' }}
         >
-          <p className="text-3xl font-black tracking-widest m-0 drop-shadow-md">
-            {status === 'SAFE' ? 'SAFE' : 'ELIMINATE'}
-          </p>
+          <div 
+            className="tiago-card"
+            style={{ 
+              backgroundImage: isSafe 
+                ? 'linear-gradient(163deg, #00ff75 0%, #3700ff 100%)' 
+                : 'linear-gradient(163deg, #ff003c 0%, #c70039 100%)',
+              boxShadow: isFlipped 
+                ? (isSafe ? '0px 0px 30px 1px rgba(0, 255, 117, 0.4)' : '0px 0px 30px 1px rgba(255, 0, 60, 0.4)') 
+                : 'none'
+            }}
+          >
+            <div className={`tiago-card2 ${isFlipped ? 'active' : ''}`}>
+              <p 
+                className="text-3xl font-black tracking-widest m-0 drop-shadow-md" 
+                style={{ color: isSafe ? '#00ff75' : '#ff003c' }}
+              >
+                {isSafe ? 'SAFE' : 'ELIMINATE'}
+              </p>
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
   );
@@ -538,7 +584,7 @@ export default function GameBoard() {
       
       <GlobalStyles />
 
-      {/* --- NEW: BLOB RULE CARD OVERLAY --- */}
+      {/* --- BLOB RULE CARD OVERLAY --- */}
       {showRules && (
         <div 
           className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in"
@@ -753,7 +799,7 @@ export default function GameBoard() {
       {phase === 'choice' && (
         <div className="relative z-10 flex flex-col items-center w-full animate-fade-in py-6">
           <p className="text-slate-400 uppercase tracking-widest text-[10px] mb-2 font-bold">Challenger</p>
-          <h2 className="text-3xl font-black tracking-widest uppercase text-slate-800 text-white drop-shadow-md mb-2">{players[1]?.name}</h2>
+          <h2 className="text-3xl font-black tracking-widest uppercase text-slate-800 mb-2 text-white drop-shadow-md">{players[1]?.name}</h2>
 
           <FlipCard isFlipped={false} status={cardStatus} />
 
