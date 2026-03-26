@@ -2,12 +2,13 @@
   "id": "/the-deck",
   "name": "The Deck: Briefcase Bluff",
   "short_name": "The Deck",
-  "start_url": "/",
+  "start_url": "/?fullscreen=true",
   "display": "fullscreen",
-  "display_override": ["fullscreen", "standalone", "window-controls-overlay"],
+  "display_override": ["window-controls-overlay", "standalone"],
   "orientation": "portrait",
   "theme_color": "#050505",
   "background_color": "#050505",
+  "description": "A high-stakes social deduction party game.",
   "icons": [
     {
       "src": "/icon-512.png",
