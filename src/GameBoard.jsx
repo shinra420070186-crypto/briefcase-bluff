@@ -79,40 +79,43 @@ const MorningSky = () => (
 );
 
 // ==============================================
-// 3. NEW: AFTERNOON SKY BACKGROUND (Matching Style)
+// 3. NEW ACTIVE GAME SKY (TWILIGHT)
 // ==============================================
-const AfternoonSky = () => (
-  <div className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, #56CCF2 0%, #F2C94C 100%)' }}>
+const TwilightSky = () => (
+  <div className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, #2B1055 0%, #7597DE 100%)' }}>
     <style>{`
-      .gold-motes { position: absolute; inset: 0; background-repeat: repeat; pointer-events: none; }
-      .gold-motes-1 {
-        background-image: radial-gradient(1.5px 1.5px at 15% 15%, rgba(255, 215, 0, 0.5), transparent), radial-gradient(1.5px 1.5px at 35% 25%, rgba(255, 215, 0, 0.5), transparent), radial-gradient(1.5px 1.5px at 55% 55%, rgba(255, 215, 0, 0.5), transparent), radial-gradient(1.5px 1.5px at 75% 35%, rgba(255, 215, 0, 0.5), transparent), radial-gradient(1.5px 1.5px at 95% 15%, rgba(255, 215, 0, 0.5), transparent);
+      .twinkle-stars { position: absolute; inset: 0; background-repeat: repeat; pointer-events: none; }
+      .tw-1 {
+        background-image: radial-gradient(1px 1px at 15% 15%, #fff, transparent), radial-gradient(1px 1px at 35% 25%, #fff, transparent), radial-gradient(1px 1px at 55% 55%, #fff, transparent), radial-gradient(1px 1px at 75% 35%, #fff, transparent), radial-gradient(1px 1px at 95% 15%, #fff, transparent);
         background-size: 100px 100px;
-        animation: twinkle 5s ease-in-out infinite;
+        animation: twinkle 4s ease-in-out infinite;
       }
-      .gold-motes-2 {
-        background-image: radial-gradient(2px 2px at 25% 45%, rgba(255, 215, 0, 0.3), transparent), radial-gradient(2px 2px at 65% 85%, rgba(255, 215, 0, 0.3), transparent), radial-gradient(2px 2px at 85% 70%, rgba(255, 215, 0, 0.3), transparent);
+      .tw-2 {
+        background-image: radial-gradient(1.5px 1.5px at 25% 45%, #fff, transparent), radial-gradient(1.5px 1.5px at 65% 85%, #fff, transparent), radial-gradient(1.5px 1.5px at 85% 70%, #fff, transparent);
         background-size: 150px 150px;
-        animation: twinkle 7s ease-in-out infinite 2s;
+        animation: twinkle 6s ease-in-out infinite 2s;
       }
-      
-      /* Active Game Haze Effect */
-      .haze { position: absolute; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent); opacity: 0; pointer-events: none; filter: blur(2px); }
-      .hz1 { bottom: 10%; left: 0; animation: heat-haze 8s linear infinite; }
-      .hz2 { bottom: 30%; left: 0; animation: heat-haze 12s linear infinite 3s; }
-      
-      .high-sun { position: absolute; top: 10%; right: 10%; width: 55px; height: 55px; border-radius: 50%; background: #FFFACD; box-shadow: 0 0 50px 20px rgba(255, 250, 205, 0.6); z-index: 10; }
-      
-      @keyframes heat-haze { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(-500px); opacity: 0; } }
+      .tw-3 {
+        background-image: radial-gradient(2px 2px at 40% 70%, #fff, transparent), radial-gradient(2px 2px at 10% 80%, #fff, transparent), radial-gradient(2px 2px at 80% 40%, #fff, transparent);
+        background-size: 200px 200px;
+        animation: twinkle 7s ease-in-out infinite 3s;
+      }
+      .tw-meteor { position: absolute; width: 1.5px; height: 1.5px; background: #fff; border-radius: 50%; box-shadow: 0 0 5px 1px rgba(255, 255, 255, 0.5); opacity: 0; pointer-events: none; }
+      .tw-meteor::after { content: ""; position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 1px; background: linear-gradient(90deg, #fff, transparent); }
+      .tw-m1 { top: 15%; left: 110%; animation: shoot 6s linear infinite; }
+      .tw-m2 { top: 45%; left: 110%; animation: shoot 10s linear infinite 3s; }
+      .tw-m3 { top: 65%; left: 110%; animation: shoot 8s linear infinite 1s; }
+      .tw-body { position: absolute; top: 15%; right: 15%; width: 45px; height: 45px; border-radius: 50%; background: #FF9A9E; box-shadow: 0 0 50px 15px rgba(255, 154, 158, 0.6); z-index: 10; }
     `}</style>
-    <div className="gold-motes gold-motes-1"></div>
-    <div className="gold-motes gold-motes-2"></div>
-    <div className="haze hz1"></div>
-    <div className="haze hz2"></div>
-    <div className="high-sun"></div>
+    <div className="twinkle-stars tw-1"></div>
+    <div className="twinkle-stars tw-2"></div>
+    <div className="twinkle-stars tw-3"></div>
+    <div className="tw-meteor tw-m1"></div>
+    <div className="tw-meteor tw-m2"></div>
+    <div className="tw-meteor tw-m3"></div>
+    <div className="tw-body"></div>
   </div>
 );
-
 
 // ==============================================
 // 4. GLOBAL STYLES
@@ -268,7 +271,7 @@ const GlobalStyles = () => (
     .theme-switch__spot { position: absolute; top: 0.75em; left: 0.312em; width: 0.75em; height: 0.75em; border-radius: var(--container-radius); background-color: var(--spot-color); box-shadow: 0em 0.0312em 0.062em rgba(0, 0, 0, 0.25) inset; }
     .theme-switch__spot:nth-of-type(2) { width: 0.375em; height: 0.375em; top: 0.937em; left: 1.375em; }
     .theme-switch__spot:nth-last-of-type(3) { width: 0.25em; height: 0.25em; top: 0.312em; left: 0.812em; }
-    .theme-switch__clouds { width: 1.25em; height: 1.25em; background-color: var(--clouds-color); border-radius: var(--container-radius); position: absolute; bottom: -0.625em; left: 0.312em; box-shadow: 0.937em 0.312em var(--clouds-color), -0.312em -0.312em var(--back-clouds-color), 1.437em 0.375em var(--clouds-color), 0.5em -0.125em var(--back-clouds-color), 2.187em 0 var(--clouds-color), 1.25em -0.062em var(--back-clouds-color), 2.937em 0.312em var(--clouds-color), 2em -0.312em var(--back-clouds-color), 3.625em -0.062em var(--clouds-color), 2.625em 0em var(--back-clouds-color), 4.5em -0.312em var(--clouds-color), 3.375em -0.437em var(--back-clouds-color), 4.625em -1.75em 0 0.437em var(--clouds-color), 4em -0.625em var(--back-clouds-color), 4.125em -2.125em 0 0.437em var(--clouds-color); transition: 0.5s cubic-bezier(0, -0.02, 0.4, 1.25); }
+    .theme-switch__clouds { width: 1.25em; height: 1.25em; background-color: var(--clouds-color); border-radius: var(--container-radius); position: absolute; bottom: -0.625em; left: 0.312em; box-shadow: 0.937em 0.312em var(--clouds-color), -0.312em -0.312em var(--back-clouds-color), 1.437em 0.375em var(--clouds-color), 0.5em -0.125em var(--back-clouds-color), 2.187em 0 var(--clouds-color), 1.25em -0.062em var(--back-clouds-color), 2.937em 0.312em var(--clouds-color), 2em -0.312em var(--back-clouds-color), 3.625em -0.062em var(--clouds-color), 2.625em 0em var(--back-clouds-color), 4.5em -0.312em var(--clouds-color), 3.375em -0.437em var(--back-clouds-color), 4.625em -1.75em 0 0.437em var(--clouds-color), 4em -0.625em var(--back-clouds-color), 4.125em -2.125em 0 0.437em var(--back-clouds-color); transition: 0.5s cubic-bezier(0, -0.02, 0.4, 1.25); }
     .theme-switch__stars-container { position: absolute; color: var(--stars-color); top: -100%; left: 0.312em; width: 2.75em; height: auto; transition: var(--transition); }
     
     .theme-switch__checkbox:checked + .theme-switch__container { background-color: var(--container-night-bg); }
@@ -279,7 +282,7 @@ const GlobalStyles = () => (
     .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__clouds { bottom: -4.062em; }
     .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__stars-container { top: 50%; transform: translateY(-50%); }
 
-    /* CEVOROB BURGER MENU CSS */
+    /* CEVOROB BURGER MENU CSS (Scaled to 50% size) */
     .burger {
       position: relative;
       width: 40px;
@@ -312,6 +315,48 @@ const GlobalStyles = () => (
     .burger input:checked ~ span:nth-of-type(1) { transform: rotate(45deg); top: 0px; left: 5px; }
     .burger input:checked ~ span:nth-of-type(2) { width: 0%; opacity: 0; }
     .burger input:checked ~ span:nth-of-type(3) { transform: rotate(-45deg); top: 28px; left: 5px; }
+
+    /* STEALTHWORM BUTTON CSS (Start Match Only) */
+    .stealth-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 320px;
+      overflow: hidden;
+      height: 4rem;
+      background-size: 300% 300%;
+      cursor: pointer;
+      backdrop-filter: blur(1rem);
+      border-radius: 5rem;
+      transition: 0.5s;
+      animation: stealth_gradient_301 5s ease infinite;
+      border: double 4px transparent;
+      background-image: linear-gradient(#212121, #212121), linear-gradient(137.48deg, #ffdb3b 10%, #fe53bb 45%, #8f51ea 67%, #0044ff 87%);
+      background-origin: border-box;
+      background-clip: content-box, border-box;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+      position: relative;
+    }
+    .stealth-btn:disabled { opacity: 0.5; pointer-events: none; filter: grayscale(1); }
+    .stealth-container-stars { position: absolute; z-index: -1; width: 100%; height: 100%; overflow: hidden; transition: 0.5s; backdrop-filter: blur(1rem); border-radius: 5rem; }
+    .stealth-strong { z-index: 2; font-size: 1.125rem; font-weight: 900; letter-spacing: 0.2em; color: #ffffff; text-shadow: 0 0 4px white; text-transform: uppercase; }
+    .stealth-glow { position: absolute; display: flex; width: 12rem; }
+    .stealth-circle { width: 100%; height: 30px; filter: blur(2rem); animation: stealth_pulse_3011 4s infinite; z-index: -1; }
+    .stealth-circle:nth-of-type(1) { background: rgba(254, 83, 186, 0.636); }
+    .stealth-circle:nth-of-type(2) { background: rgba(142, 81, 234, 0.704); }
+    .stealth-btn:hover .stealth-container-stars { z-index: 1; background-color: #212121; }
+    .stealth-btn:hover { transform: scale(1.05); }
+    .stealth-btn:active { border: double 4px #fe53bb; background-origin: border-box; background-clip: content-box, border-box; animation: none; transform: scale(0.95); }
+    .stealth-btn:active .stealth-circle { background: #fe53bb; }
+    .stealth-stars { position: relative; background: transparent; width: 200rem; height: 200rem; }
+    .stealth-stars::after { content: ""; position: absolute; top: -10rem; left: -100rem; width: 100%; height: 100%; animation: stealth_animStarRotate 90s linear infinite; background-image: radial-gradient(#ffffff 1px, transparent 1%); background-size: 50px 50px; }
+    .stealth-stars::before { content: ""; position: absolute; top: 0; left: -50%; width: 170%; height: 500%; animation: stealth_animStar 60s linear infinite; background-image: radial-gradient(#ffffff 1px, transparent 1%); background-size: 50px 50px; opacity: 0.5; }
+    @keyframes stealth_animStar { from { transform: translateY(0); } to { transform: translateY(-135rem); } }
+    @keyframes stealth_animStarRotate { from { transform: rotate(360deg); } to { transform: rotate(0); } }
+    @keyframes stealth_gradient_301 { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+    @keyframes stealth_pulse_3011 { 0% { transform: scale(0.75); box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); } 100% { transform: scale(0.75); box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); } }
 
     /* BARISDOGANSUTCU SVG BUTTON (Hide & Proceed Only) */
     .play-btn {
@@ -383,7 +428,7 @@ const GlobalStyles = () => (
 );
 
 // ==============================================
-// 4. GAME COMPONENTS
+// 5. GAME COMPONENTS
 // ==============================================
 const FlipCard = ({ isFlipped, status }) => {
   return (
@@ -512,11 +557,11 @@ export default function GameBoard() {
         </div>
       )}
 
-      {/* --- DYNAMIC BACKGROUND HANDLING (UPDATED) --- */}
+      {/* --- DYNAMIC BACKGROUND HANDLING --- */}
       {phase === 'lobby' ? (
         (isDayMode ? <MorningSky /> : <MidnightSky />)
       ) : (
-        <AfternoonSky /> /* Jaykdoe stars removed, now using AfternoonSky for active game */
+        <TwilightSky /> /* NEW: Twilight Sky for Active Game */
       )}
       
       {/* --- LOBBY PHASE --- */}
@@ -646,7 +691,7 @@ export default function GameBoard() {
               ))}
             </div>
 
-            {/* --- START MATCH BUTTON --- */}
+            {/* --- STEALTHWORM START MATCH BUTTON --- */}
             <button 
               onClick={() => handleDelayedAction(startGame, sfx.tap, 250)}
               disabled={players.length < 2}
@@ -669,7 +714,7 @@ export default function GameBoard() {
       {phase === 'peek' && (
         <div className="relative z-10 flex flex-col items-center w-full animate-fade-in py-6">
           <p className="text-slate-400 uppercase tracking-widest text-[10px] mb-2 font-bold">Current Player</p>
-          <h2 className="text-3xl font-black tracking-widest uppercase text-slate-800">{players[0]?.name}</h2>
+          <h2 className="text-3xl font-black tracking-widest uppercase text-slate-800 text-white drop-shadow-md">{players[0]?.name}</h2>
 
           <div 
             onMouseDown={onHoldStart} onMouseUp={onHoldEnd} onMouseLeave={onHoldEnd}
@@ -706,7 +751,7 @@ export default function GameBoard() {
       {phase === 'choice' && (
         <div className="relative z-10 flex flex-col items-center w-full animate-fade-in py-6">
           <p className="text-slate-400 uppercase tracking-widest text-[10px] mb-2 font-bold">Challenger</p>
-          <h2 className="text-3xl font-black tracking-widest uppercase text-slate-800 mb-2">{players[1]?.name}</h2>
+          <h2 className="text-3xl font-black tracking-widest uppercase text-slate-800 text-white drop-shadow-md mb-2">{players[1]?.name}</h2>
 
           <FlipCard isFlipped={false} status={cardStatus} />
 
