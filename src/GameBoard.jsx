@@ -88,24 +88,27 @@ const TwilightSky = () => (
       .tw-1 {
         background-image: radial-gradient(1px 1px at 15% 15%, #fff, transparent), radial-gradient(1px 1px at 35% 25%, #fff, transparent), radial-gradient(1px 1px at 55% 55%, #fff, transparent), radial-gradient(1px 1px at 75% 35%, #fff, transparent), radial-gradient(1px 1px at 95% 15%, #fff, transparent);
         background-size: 100px 100px;
-        animation: twinkle 4s ease-in-out infinite;
+        animation: twilight-twinkle 4s ease-in-out infinite;
       }
       .tw-2 {
         background-image: radial-gradient(1.5px 1.5px at 25% 45%, #fff, transparent), radial-gradient(1.5px 1.5px at 65% 85%, #fff, transparent), radial-gradient(1.5px 1.5px at 85% 70%, #fff, transparent);
         background-size: 150px 150px;
-        animation: twinkle 6s ease-in-out infinite 2s;
+        animation: twilight-twinkle 6s ease-in-out infinite 2s;
       }
       .tw-3 {
         background-image: radial-gradient(2px 2px at 40% 70%, #fff, transparent), radial-gradient(2px 2px at 10% 80%, #fff, transparent), radial-gradient(2px 2px at 80% 40%, #fff, transparent);
         background-size: 200px 200px;
-        animation: twinkle 7s ease-in-out infinite 3s;
+        animation: twilight-twinkle 7s ease-in-out infinite 3s;
       }
       .tw-meteor { position: absolute; width: 1.5px; height: 1.5px; background: #fff; border-radius: 50%; box-shadow: 0 0 5px 1px rgba(255, 255, 255, 0.5); opacity: 0; pointer-events: none; }
       .tw-meteor::after { content: ""; position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 1px; background: linear-gradient(90deg, #fff, transparent); }
-      .tw-m1 { top: 15%; left: 110%; animation: shoot 6s linear infinite; }
-      .tw-m2 { top: 45%; left: 110%; animation: shoot 10s linear infinite 3s; }
-      .tw-m3 { top: 65%; left: 110%; animation: shoot 8s linear infinite 1s; }
+      .tw-m1 { top: 15%; left: 110%; animation: twilight-shoot 6s linear infinite; }
+      .tw-m2 { top: 45%; left: 110%; animation: twilight-shoot 10s linear infinite 3s; }
+      .tw-m3 { top: 65%; left: 110%; animation: twilight-shoot 8s linear infinite 1s; }
       .tw-body { position: absolute; top: 15%; right: 15%; width: 45px; height: 45px; border-radius: 50%; background: #FF9A9E; box-shadow: 0 0 50px 15px rgba(255, 154, 158, 0.6); z-index: 10; }
+
+      @keyframes twilight-twinkle { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+      @keyframes twilight-shoot { 0% { transform: translateX(0) translateY(0) rotate(-35deg); opacity: 0; } 5% { opacity: 1; } 15% { transform: translateX(-1500px) translateY(1000px) rotate(-35deg); opacity: 0; } 100% { transform: translateX(-1500px) translateY(1000px) rotate(-35deg); opacity: 0; } }
     `}</style>
     <div className="twinkle-stars tw-1"></div>
     <div className="twinkle-stars tw-2"></div>
@@ -282,7 +285,7 @@ const GlobalStyles = () => (
     .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__clouds { bottom: -4.062em; }
     .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__stars-container { top: 50%; transform: translateY(-50%); }
 
-    /* CEVOROB BURGER MENU CSS (Scaled to 50% size) */
+    /* CEVOROB BURGER MENU CSS */
     .burger {
       position: relative;
       width: 40px;
@@ -322,7 +325,6 @@ const GlobalStyles = () => (
       justify-content: center;
       align-items: center;
       width: 100%;
-      max-width: 320px;
       overflow: hidden;
       height: 4rem;
       background-size: 300% 300%;
@@ -561,7 +563,7 @@ export default function GameBoard() {
       {phase === 'lobby' ? (
         (isDayMode ? <MorningSky /> : <MidnightSky />)
       ) : (
-        <TwilightSky /> /* NEW: Twilight Sky for Active Game */
+        <TwilightSky /> /* Twilight Sky for Active Game */
       )}
       
       {/* --- LOBBY PHASE --- */}
