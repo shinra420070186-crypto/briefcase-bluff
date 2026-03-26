@@ -246,11 +246,11 @@ const GlobalStyles = () => (
     .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__clouds { bottom: -4.062em; }
     .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__stars-container { top: 50%; transform: translateY(-50%); }
 
-    /* CEVOROB BURGER MENU CSS (Scaled Down) */
+    /* CEVOROB BURGER MENU CSS */
     .burger {
       position: relative;
-      width: 24px;
-      height: 18px;
+      width: 40px;
+      height: 30px;
       background: transparent;
       cursor: pointer;
       display: block;
@@ -261,9 +261,9 @@ const GlobalStyles = () => (
     .burger span {
       display: block;
       position: absolute;
-      height: 2px;
+      height: 4px;
       width: 100%;
-      background: white;
+      background: white; /* Changed to white for dark backgrounds */
       border-radius: 9px;
       opacity: 1;
       left: 0;
@@ -274,9 +274,9 @@ const GlobalStyles = () => (
     .burger span:nth-of-type(1) { top: 0px; transform-origin: left center; }
     .burger span:nth-of-type(2) { top: 50%; transform: translateY(-50%); transform-origin: left center; }
     .burger span:nth-of-type(3) { top: 100%; transform-origin: left center; transform: translateY(-100%); }
-    .burger input:checked ~ span:nth-of-type(1) { transform: rotate(45deg); top: -2px; left: 4px; }
+    .burger input:checked ~ span:nth-of-type(1) { transform: rotate(45deg); top: 0px; left: 5px; }
     .burger input:checked ~ span:nth-of-type(2) { width: 0%; opacity: 0; }
-    .burger input:checked ~ span:nth-of-type(3) { transform: rotate(-45deg); top: 15px; left: 4px; }
+    .burger input:checked ~ span:nth-of-type(3) { transform: rotate(-45deg); top: 28px; left: 5px; }
 
     /* STEALTHWORM BUTTON CSS (Start Match Only) */
     .stealth-btn {
@@ -341,9 +341,6 @@ const GlobalStyles = () => (
       position: relative;
       overflow: hidden;
       transition: all 0.5s ease;
-      width: 100%;
-      max-width: 320px;
-      height: 62px;
       margin-top: 1rem;
       outline: none;
       -webkit-tap-highlight-color: transparent;
@@ -382,7 +379,7 @@ const GlobalStyles = () => (
     }
 
     .play-btn:hover .play-btn-now, .play-btn:active .play-btn-now {
-      transform: translateX(20px); 
+      transform: translateX(10px); 
       transition-delay: 300ms;
     }
 
@@ -459,7 +456,7 @@ export default function GameBoard() {
     if (actionCallback) actionCallback();
   };
 
-  // --- DELAYED ACTION FOR MAJOR PAGE TRANSITIONS (Customizable delay) ---
+  // --- DELAYED ACTION FOR MAJOR PAGE TRANSITIONS ---
   const handleDelayedAction = (actionCallback, soundEffect = sfx.tap, delayMs = 250) => {
     sfx.init();
     if (soundEffect) soundEffect.bind(sfx)();
@@ -502,7 +499,7 @@ export default function GameBoard() {
       
       <GlobalStyles />
 
-      {/* --- NEW: BLOB RULE CARD OVERLAY --- */}
+      {/* --- BLOB RULE CARD OVERLAY --- */}
       {showRules && (
         <div 
           className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in"
@@ -655,7 +652,7 @@ export default function GameBoard() {
 
             {/* --- STEALTHWORM START MATCH BUTTON --- */}
             <button 
-              onClick={() => handleDelayedAction(startGame)}
+              onClick={() => handleDelayedAction(startGame, sfx.tap, 250)}
               disabled={players.length < 2}
               className="stealth-btn"
             >
@@ -722,7 +719,7 @@ export default function GameBoard() {
           <div className="flex w-full max-w-xs gap-4">
             {/* Added 250ms delay to Take Button */}
             <button 
-              onClick={() => handleDelayedAction(() => makeChoice('STEAL'), sfx.tap)}
+              onClick={() => handleDelayedAction(() => makeChoice('STEAL'), sfx.tap, 250)}
               className="group relative flex-1 p-0 bg-transparent border-none outline-none touch-manipulation cursor-pointer"
             >
               <span className="absolute inset-0 w-full h-full rounded-2xl bg-black/15 translate-y-[2px] transition-transform duration-300 group-active:translate-y-[1px] group-active:duration-[34ms]"></span>
@@ -734,7 +731,7 @@ export default function GameBoard() {
 
             {/* Added 250ms delay to Pass Button */}
             <button 
-              onClick={() => handleDelayedAction(() => makeChoice('LEAVE'), sfx.tap)}
+              onClick={() => handleDelayedAction(() => makeChoice('LEAVE'), sfx.tap, 250)}
               className="group relative flex-1 p-0 bg-transparent border-none outline-none touch-manipulation cursor-pointer"
             >
               <span className="absolute inset-0 w-full h-full rounded-2xl bg-black/15 translate-y-[2px] transition-transform duration-300 group-active:translate-y-[1px] group-active:duration-[34ms]"></span>
@@ -763,7 +760,7 @@ export default function GameBoard() {
 
           {/* Added 250ms delay to Next Match Button */}
           <button 
-            onClick={() => handleDelayedAction(nextRound)}
+            onClick={() => handleDelayedAction(nextRound, sfx.tap, 250)}
             className="w-full max-w-xs py-5 bg-slate-800 text-white rounded-2xl font-black tracking-[0.2em] shadow-xl active:scale-95 transition-transform"
           >
             NEXT MATCH
@@ -776,7 +773,7 @@ export default function GameBoard() {
         <div className="relative z-10 flex flex-col items-center animate-fade-in text-center mt-16 w-full">
           
           <button 
-            onClick={() => handleDelayedAction(backToLobby)}
+            onClick={() => handleDelayedAction(backToLobby, sfx.tap, 250)}
             className="group fixed top-6 right-6 flex items-center justify-center h-10 px-3 bg-white border border-slate-200 shadow-sm rounded-lg text-slate-600 font-bold tracking-widest uppercase text-[10px] active:scale-95 active:-translate-y-1 active:shadow-md transition-all duration-200 z-50"
           >
             <svg className="h-4 w-4 mr-1 transition-transform duration-300 group-active:-translate-x-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" fill="currentColor">
@@ -791,7 +788,7 @@ export default function GameBoard() {
           
           {/* Added 250ms delay to Play Again Button */}
           <button 
-            onClick={() => handleDelayedAction(playAgain)}
+            onClick={() => handleDelayedAction(playAgain, sfx.tap, 250)}
             className="px-8 py-4 bg-white border-2 border-slate-200 shadow-md rounded-2xl text-slate-800 font-bold tracking-[0.2em] active:bg-slate-50 transition-colors"
           >
             PLAY AGAIN
