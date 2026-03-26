@@ -57,7 +57,7 @@ const MorningSky = () => (
 );
 
 // ==============================================
-// 3. GLOBAL STYLES (Burger, Rule Cards, Animations, Buttons)
+// 3. GLOBAL STYLES
 // ==============================================
 const GlobalStyles = () => (
   <style>{`
@@ -85,47 +85,15 @@ const GlobalStyles = () => (
     .cards .card:hover p.second-text, .cards .card:focus p.second-text { opacity: 1; max-height: 50px; margin-top: 8px; }
     .cards:hover > .card:not(:hover), .cards:focus-within > .card:not(:focus) { filter: blur(4px); transform: scale(0.95, 0.95); opacity: 0.7; }
 
-    /* Flip Card Animations - FIXED ROTATION */
-    @keyframes rotation_481 { 0% { transform: rotateZ(0deg); } 100% { transform: rotateZ(360deg); } }
-    .animate-card-rotation { animation: rotation_481 5000ms infinite linear; }
-    @keyframes floating { 0% { transform: translateY(0px); } 50% { transform: translateY(10px); } 100% { transform: translateY(0px); } }
-
     /* Take / Pass Glowing Buttons */
-    .take-pass-btn {
-      width: 140px;
-      height: 62px;
-      cursor: pointer;
-      color: #fff;
-      font-size: 16px;
-      font-weight: 900;
-      letter-spacing: 2px;
-      border-radius: 1rem;
-      border: none;
-      position: relative;
-      background: #100720;
-      transition: 0.1s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      outline: none;
-    }
-    .take-pass-btn::after {
-      content: '';
-      width: 100%;
-      height: 100%;
-      background-image: radial-gradient(circle farthest-corner at 10% 20%, rgba(255,94,247,1) 17.8%, rgba(2,245,255,1) 100.2%);
-      filter: blur(15px);
-      z-index: -1;
-      position: absolute;
-      left: 0;
-      top: 0;
-      border-radius: 1rem;
-    }
-    .take-pass-btn:active {
-      transform: scale(0.9) rotate(3deg);
-      background: radial-gradient(circle farthest-corner at 10% 20%, rgba(255,94,247,1) 17.8%, rgba(2,245,255,1) 100.2%);
-      transition: 0.2s;
-    }
+    .take-pass-btn { width: 140px; height: 62px; cursor: pointer; color: #fff; font-size: 16px; font-weight: 900; letter-spacing: 2px; border-radius: 1rem; border: none; position: relative; background: #100720; transition: 0.1s; display: flex; align-items: center; justify-content: center; outline: none; }
+    .take-pass-btn::after { content: ''; width: 100%; height: 100%; background-image: radial-gradient(circle farthest-corner at 10% 20%, rgba(255,94,247,1) 17.8%, rgba(2,245,255,1) 100.2%); filter: blur(15px); z-index: -1; position: absolute; left: 0; top: 0; border-radius: 1rem; }
+    .take-pass-btn:active { transform: scale(0.9) rotate(3deg); background: radial-gradient(circle farthest-corner at 10% 20%, rgba(255,94,247,1) 17.8%, rgba(2,245,255,1) 100.2%); transition: 0.2s; }
+
+    /* Kabak Next Match Button CSS */
+    .next-match-btn { height: 60px; margin: 10px auto; width: 100%; max-width: 320px; background: #333; display: flex; justify-content: center; cursor: pointer; align-items: center; font-family: Consolas, Courier New, monospace; border: solid #404c5d 1px; font-size: 16px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; color: rgb(161, 161, 161); transition: 500ms; border-radius: 8px; background: linear-gradient(145deg, #2e2d2d, #212121); box-shadow: -1px -5px 15px #41465b, 5px 5px 15px #41465b, inset 5px 5px 10px #212121, inset -5px -5px 10px #212121; }
+    .next-match-btn:hover { box-shadow: 1px 1px 13px #20232e, -1px -1px 13px #545b78; color: #d6d6d6; transition: 500ms; }
+    .next-match-btn:active { box-shadow: 1px 1px 13px #20232e, -1px -1px 33px #545b78; color: #d6d6d6; transition: 100ms; }
 
     /* Shine Text CSS */
     .shine-text { color: rgba(255, 255, 255, 0.3); background: #222 -webkit-gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.5, #fff)) 0 0 no-repeat; background-image: -webkit-linear-gradient(-40deg, transparent 0%, transparent 40%, #fff 50%, transparent 60%, transparent 100%); -webkit-background-clip: text; -webkit-background-size: 50px; -webkit-animation: zezzz 5s infinite; }
@@ -150,14 +118,6 @@ const GlobalStyles = () => (
     .poda-darkBorderBg::before { content: ""; z-index: -2; text-align: center; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(82deg); position: absolute; width: 600px; height: 600px; background-repeat: no-repeat; background-position: 0 0; background-image: conic-gradient(rgba(0,0,0,0), #18116a, rgba(0,0,0,0) 10%, rgba(0,0,0,0) 50%, #6e1b60, rgba(0,0,0,0) 60%); transition: all 2s; }
     .poda-glow { overflow: hidden; filter: blur(30px); opacity: 0.4; max-height: 130px; max-width: 354px; }
     .poda-glow::before { content: ""; z-index: -2; text-align: center; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(60deg); position: absolute; width: 999px; height: 999px; background-repeat: no-repeat; background-position: 0 0; background-image: conic-gradient(#000, #402fb5 5%, #000 38%, #000 50%, #cf30aa 60%, #000 87%); transition: all 2s; }
-    .poda:hover .poda-darkBorderBg::before { transform: translate(-50%, -50%) rotate(262deg); }
-    .poda:hover .poda-glow::before { transform: translate(-50%, -50%) rotate(240deg); }
-    .poda:hover .poda-white::before { transform: translate(-50%, -50%) rotate(263deg); }
-    .poda:hover .poda-border::before { transform: translate(-50%, -50%) rotate(250deg); }
-    .poda:focus-within .poda-darkBorderBg::before { transform: translate(-50%, -50%) rotate(442deg); transition: all 4s; }
-    .poda:focus-within .poda-glow::before { transform: translate(-50%, -50%) rotate(420deg); transition: all 4s; }
-    .poda:focus-within .poda-white::before { transform: translate(-50%, -50%) rotate(443deg); transition: all 4s; }
-    .poda:focus-within .poda-border::before { transform: translate(-50%, -50%) rotate(430deg); transition: all 4s; }
     .poda-add-btn { position: absolute; top: 8px; right: 8px; display: flex; align-items: center; justify-content: center; z-index: 2; max-height: 40px; max-width: 38px; height: 100%; width: 100%; isolation: isolate; overflow: hidden; border-radius: 10px; background: linear-gradient(180deg, #161329, black, #1d1b4b); border: 1px solid transparent; cursor: pointer; }
     .poda-add-btn:active { transform: scale(0.95); }
     .poda-filterBorder { height: 42px; width: 40px; position: absolute; overflow: hidden; top: 7px; right: 7px; border-radius: 10px; pointer-events: none; }
@@ -177,70 +137,97 @@ const GlobalStyles = () => (
     .theme-switch__spot { position: absolute; top: 0.75em; left: 0.312em; width: 0.75em; height: 0.75em; border-radius: var(--container-radius); background-color: var(--spot-color); box-shadow: 0em 0.0312em 0.062em rgba(0, 0, 0, 0.25) inset; }
     .theme-switch__spot:nth-of-type(2) { width: 0.375em; height: 0.375em; top: 0.937em; left: 1.375em; }
     .theme-switch__spot:nth-last-of-type(3) { width: 0.25em; height: 0.25em; top: 0.312em; left: 0.812em; }
-    .theme-switch__clouds { width: 1.25em; height: 1.25em; background-color: var(--clouds-color); border-radius: var(--container-radius); position: absolute; bottom: -0.625em; left: 0.312em; box-shadow: 0.937em 0.312em var(--clouds-color), -0.312em -0.312em var(--back-clouds-color), 1.437em 0.375em var(--clouds-color), 0.5em -0.125em var(--back-clouds-color), 2.187em 0 var(--clouds-color), 1.25em -0.062em var(--back-clouds-color), 2.937em 0.312em var(--clouds-color), 2em -0.312em var(--back-clouds-color), 3.625em -0.062em var(--clouds-color), 2.625em 0em var(--back-clouds-color), 4.5em -0.312em var(--clouds-color), 3.375em -0.437em var(--back-clouds-color), 4.625em -1.75em 0 0.437em var(--clouds-color), 4em -0.625em var(--back-clouds-color), 4.125em -2.125em 0 0.437em var(--back-clouds-color); transition: 0.5s cubic-bezier(0, -0.02, 0.4, 1.25); }
-    .theme-switch__stars-container { position: absolute; color: var(--stars-color); top: -100%; left: 0.312em; width: 2.75em; height: auto; transition: var(--transition); }
-    .theme-switch__checkbox:checked + .theme-switch__container { background-color: var(--container-night-bg); }
-    .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__circle-container { left: calc(100% - var(--circle-container-offset) - var(--circle-container-diameter)); }
-    .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__circle-container:hover { left: calc(100% - var(--circle-container-offset) - var(--circle-container-diameter) - 0.187em) }
-    .theme-switch__circle-container:hover { left: calc(var(--circle-container-offset) + 0.187em); }
-    .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__moon { transform: translate(0); }
-    .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__clouds { bottom: -4.062em; }
-    .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__stars-container { top: 50%; transform: translateY(-50%); }
+
+    /* =========================================
+       NEW: SMIT-PRAJAPATI 3D GLASSMORPHISM CARD 
+       ========================================= */
+    .smit-parent { width: 260px; height: 300px; perspective: 1000px; margin: 20px auto; }
+    .smit-card { height: 100%; border-radius: 40px; transition: all 0.5s ease-in-out; transform-style: preserve-3d; box-shadow: rgba(0, 0, 0, 0) 40px 50px 25px -40px, rgba(0, 0, 0, 0.2) 0px 25px 25px -5px; }
+    .smit-glass { transform-style: preserve-3d; position: absolute; inset: 8px; border-radius: 45px; border-top-right-radius: 100%; background: linear-gradient(0deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.6) 100%); transform: translate3d(0px, 0px, 25px); border-left: 1px solid white; border-bottom: 1px solid white; transition: all 0.5s ease-in-out; }
+    .smit-content { padding: 90px 40px 0px 25px; transform: translate3d(0, 0, 26px); }
+    .smit-title { display: block; font-weight: 900; font-size: 24px; letter-spacing: 2px; }
+    .smit-text { display: block; font-size: 13px; margin-top: 15px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+    .smit-bottom { padding: 10px 12px; transform-style: preserve-3d; position: absolute; bottom: 20px; left: 20px; right: 20px; display: flex; align-items: center; justify-content: flex-end; transform: translate3d(0, 0, 26px); }
+    .smit-logo { position: absolute; right: 0; top: 0; transform-style: preserve-3d; }
+    .smit-circle { display: block; position: absolute; aspect-ratio: 1; border-radius: 50%; top: 0; right: 0; box-shadow: rgba(100, 100, 111, 0.2) -10px 10px 20px 0px; -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px); background: rgba(255, 255, 255, 0.2); transition: all 0.5s ease-in-out; }
+    .smit-circle1 { width: 150px; transform: translate3d(0, 0, 20px); top: 8px; right: 8px; }
+    .smit-circle2 { width: 120px; transform: translate3d(0, 0, 40px); top: 10px; right: 10px; -webkit-backdrop-filter: blur(1px); backdrop-filter: blur(1px); transition-delay: 0.2s; }
+    .smit-circle3 { width: 90px; transform: translate3d(0, 0, 60px); top: 15px; right: 15px; transition-delay: 0.4s; }
+    .smit-circle4 { width: 60px; transform: translate3d(0, 0, 80px); top: 20px; right: 20px; transition-delay: 0.6s; }
+    .smit-circle5 { width: 40px; transform: translate3d(0, 0, 100px); top: 25px; right: 25px; display: grid; place-content: center; transition-delay: 0.8s; }
+    .smit-circle5 .svg { width: 18px; fill: white; }
+    
+    /* 3D Hover & Reveal Logic */
+    .smit-parent:hover .smit-card, .smit-parent.revealed .smit-card { transform: rotate3d(1, 1, 0, 25deg); box-shadow: rgba(0, 0, 0, 0.4) 20px 40px 25px -20px, rgba(0, 0, 0, 0.2) 0px 20px 25px 0px; }
+    .smit-parent:hover .smit-logo .smit-circle2, .smit-parent.revealed .smit-logo .smit-circle2 { transform: translate3d(0, 0, 60px); }
+    .smit-parent:hover .smit-logo .smit-circle3, .smit-parent.revealed .smit-logo .smit-circle3 { transform: translate3d(0, 0, 80px); }
+    .smit-parent:hover .smit-logo .smit-circle4, .smit-parent.revealed .smit-logo .smit-circle4 { transform: translate3d(0, 0, 100px); }
+    .smit-parent:hover .smit-logo .smit-circle5, .smit-parent.revealed .smit-logo .smit-circle5 { transform: translate3d(0, 0, 120px); }
   `}</style>
 );
 
 // ==============================================
-// 4. GAME COMPONENTS
+// 4. GAME COMPONENTS (NEW 3D REVEAL CARD)
 // ==============================================
 const FlipCard = ({ isFlipped, status }) => {
   const isSafe = status === 'SAFE';
 
+  // Dynamic Styles based on State
+  const cardBg = isFlipped
+    ? (isSafe ? 'linear-gradient(135deg, rgb(0, 255, 214) 0%, rgb(8, 226, 96) 100%)' : 'linear-gradient(135deg, #ff4b2b 0%, #ff416c 100%)')
+    : 'linear-gradient(135deg, #a8c0ff 0%, #3f2b96 100%)'; // Cool deck cover
+
+  const textColor = isFlipped
+    ? (isSafe ? '#006400' : '#640000') // Dark green or Dark red
+    : '#1e3a8a'; // Dark blue for deck
+
+  const subTextColor = isFlipped
+    ? (isSafe ? 'rgba(0, 100, 0, 0.8)' : 'rgba(100, 0, 0, 0.8)')
+    : 'rgba(30, 58, 138, 0.8)';
+
   return (
-    <div className="my-6 relative w-[190px] h-[254px] [perspective:1000px] font-sans">
-      <div 
-        className="relative w-full h-full text-center transition-transform duration-[600ms] [transform-style:preserve-3d] shadow-[0_0_10px_1px_rgba(0,0,0,0.8)] rounded-[5px]"
-        style={{ transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
-      >
-        {/* --- BACK SIDE (Cover Side / THE DECK) --- */}
-        <div className="absolute w-full h-full bg-[#151515] [backface-visibility:hidden] rounded-[5px] overflow-hidden flex flex-col items-center justify-center">
-          {/* FIXED ANIMATION HERE */}
-          <div className="absolute w-[160px] h-[160%] bg-[linear-gradient(90deg,transparent,#ff9966,#ff9966,#ff9966,#ff9966,transparent)] animate-card-rotation"></div>
-          <div className="absolute w-[98%] h-[98%] bg-[#151515] rounded-[5px] text-white flex flex-col items-center justify-center gap-6 z-10">
-            <svg stroke="#ffffff" viewBox="0 0 50 50" height="50px" width="50px" fill="#ffffff">
-              <path d="M20.84375 0.03125C20.191406 0.0703125 19.652344 0.425781 19.21875 1.53125C18.988281 2.117188 18.5 3.558594 18.03125 4.9375C17.792969 5.636719 17.570313 6.273438 17.40625 6.75C17.390625 6.796875 17.414063 6.855469 17.40625 6.90625C17.398438 6.925781 17.351563 6.949219 17.34375 6.96875L17.25 7.25C18.566406 7.65625 19.539063 8.058594 19.625 8.09375C22.597656 9.21875 28.351563 11.847656 33.28125 16.78125C38.5 22 41.183594 28.265625 42.09375 30.71875C42.113281 30.761719 42.375 31.535156 42.75 32.84375C42.757813 32.839844 42.777344 32.847656 42.78125 32.84375C43.34375 32.664063 44.953125 32.09375 46.3125 31.625C47.109375 31.351563 47.808594 31.117188 48.15625 31C49.003906 30.714844 49.542969 30.292969 49.8125 29.6875C50.074219 29.109375 50.066406 28.429688 49.75 27.6875C49.605469 27.347656 49.441406 26.917969 49.25 26.4375C47.878906 23.007813 45.007813 15.882813 39.59375 10.46875C33.613281 4.484375 25.792969 1.210938 22.125 0.21875C21.648438 0.0898438 21.234375 0.0078125 20.84375 0.03125 Z M 16.46875 9.09375L0.0625 48.625C-0.09375 48.996094 -0.00390625 49.433594 0.28125 49.71875C0.472656 49.910156 0.738281 50 1 50C1.128906 50 1.253906 49.988281 1.375 49.9375L40.90625 33.59375C40.523438 32.242188 40.222656 31.449219 40.21875 31.4375C39.351563 29.089844 36.816406 23.128906 31.875 18.1875C27.035156 13.34375 21.167969 10.804688 18.875 9.9375C18.84375 9.925781 17.8125 9.5 16.46875 9.09375 Z M 17 16C19.761719 16 22 18.238281 22 21C22 23.761719 19.761719 26 17 26C15.140625 26 13.550781 24.972656 12.6875 23.46875L15.6875 16.1875C16.101563 16.074219 16.550781 16 17 16 Z M 31 22C32.65625 22 34 23.34375 34 25C34 25.917969 33.585938 26.730469 32.9375 27.28125L32.90625 27.28125C33.570313 27.996094 34 28.949219 34 30C34 32.210938 32.210938 34 30 34C27.789063 34 26 32.210938 26 30C26 28.359375 26.996094 26.960938 28.40625 26.34375L28.3125 26.3125C28.117188 25.917969 28 25.472656 28 25C28 23.34375 29.34375 22 31 22 Z M 21 32C23.210938 32 25 33.789063 25 36C25 36.855469 24.710938 37.660156 24.25 38.3125L20.3125 39.9375C18.429688 39.609375 17 37.976563 17 36C17 33.789063 18.789063 32 21 32 Z M 9 34C10.65625 34 12 35.34375 12 37C12 38.65625 10.65625 40 9 40C7.902344 40 6.960938 39.414063 6.4375 38.53125L8.25 34.09375C8.488281 34.03125 8.742188 34 9 34Z"></path>
+    <div className={`smit-parent ${isFlipped ? 'revealed' : ''}`}>
+      <div className="smit-card" style={{ background: cardBg }}>
+        
+        {/* Top Right Circles */}
+        <div className="smit-logo">
+          <span className="smit-circle smit-circle1"></span>
+          <span className="smit-circle smit-circle2"></span>
+          <span className="smit-circle smit-circle3"></span>
+          <span className="smit-circle smit-circle4"></span>
+          <span className="smit-circle smit-circle5">
+            {/* Minimalist diamond/star icon */}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="svg">
+              <path d="M12 2L15 10L23 12L15 14L12 22L9 14L1 12L9 10L12 2Z" />
             </svg>
-            <strong className="tracking-widest uppercase">THE DECK</strong>
-            <p className="text-[9px] uppercase tracking-widest text-white/50">{isFlipped ? 'Revealing...' : 'Hold to View'}</p>
-          </div>
+          </span>
         </div>
 
-        {/* --- FRONT SIDE (Revealed Side / SAFE or ELIMINATE) --- */}
-        <div className="absolute w-full h-full bg-[#151515] [backface-visibility:hidden] rounded-[5px] overflow-hidden [transform:rotateY(180deg)] text-white">
-          <div className="absolute w-full h-full object-cover">
-            <div className={`absolute w-[90px] h-[90px] rounded-full blur-[15px] animate-[floating_2600ms_infinite_linear] ${isSafe ? 'bg-emerald-400' : 'bg-rose-500'}`}></div>
-            <div className={`absolute w-[150px] h-[150px] rounded-full blur-[15px] animate-[floating_2600ms_infinite_linear] left-[50px] top-[0px] [animation-delay:-800ms] ${isSafe ? 'bg-emerald-600' : 'bg-rose-600'}`}></div>
-            <div className={`absolute w-[30px] h-[30px] rounded-full blur-[15px] animate-[floating_2600ms_infinite_linear] left-[160px] top-[-80px] [animation-delay:-1800ms] ${isSafe ? 'bg-emerald-300' : 'bg-rose-400'}`}></div>
-          </div>
+        <div className="smit-glass"></div>
 
-          <div className="absolute w-full h-full p-3 flex flex-col justify-between z-10">
-            <small className="bg-black/30 px-3 py-1 rounded-full backdrop-blur-[2px] w-fit text-[10px] tracking-widest uppercase">{status}</small>
-            
-            <div className="shadow-[0_0_10px_5px_rgba(0,0,0,0.5)] w-full p-3 bg-black/60 backdrop-blur-sm rounded-[5px] text-left">
-              <div className="flex justify-between items-center w-full">
-                <p className={`font-black uppercase tracking-widest text-sm ${isSafe ? 'text-emerald-400' : 'text-rose-500'}`}>
-                  {isSafe ? 'SAFE' : 'ELIMINATE'}
-                </p>
-                {isSafe ? (
-                  <svg fill="none" height="15px" width="15px" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3" className="text-emerald-400"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                ) : (
-                  <svg fill="none" height="15px" width="15px" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3" className="text-rose-500"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                )}
-              </div>
-              <p className="text-white/50 mt-2 text-[8px] uppercase tracking-widest">
-                {isSafe ? 'You survive this round' : 'Game Over for you'}
-              </p>
+        {/* Text Content */}
+        <div className="smit-content">
+          <span className="smit-title" style={{ color: textColor, transition: 'color 0.5s' }}>
+            {isFlipped ? (isSafe ? 'SAFE' : 'ELIMINATE') : 'THE DECK'}
+          </span>
+          <span className="smit-text" style={{ color: subTextColor, transition: 'color 0.5s' }}>
+            {isFlipped
+              ? (isSafe ? 'You survive this round.' : 'Your game ends here.')
+              : 'Hold to peek at your fate.'}
+          </span>
+        </div>
+
+        {/* Bottom Icon */}
+        <div className="smit-bottom">
+          {isFlipped && (
+            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-lg transition-all duration-500 transform translate-z-[50px]">
+              {isSafe ? (
+                <svg fill="none" height="20px" width="20px" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="4" className="text-emerald-500"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+              ) : (
+                <svg fill="none" height="20px" width="20px" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="4" className="text-rose-600"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+              )}
             </div>
-          </div>
+          )}
         </div>
 
       </div>
@@ -272,14 +259,14 @@ export default function GameBoard() {
     if (actionCallback) actionCallback();
   };
 
-  // --- NEW: DELAYED ACTION FOR BUTTON ANIMATIONS ---
+  // Delayed action for button animations
   const handleDelayedAction = (actionCallback, soundEffect = sfx.tap) => {
     sfx.init();
     if (soundEffect) soundEffect.bind(sfx)();
     if (actionCallback) {
       setTimeout(() => {
         actionCallback();
-      }, 200); // 200ms delay so button click animation can be seen
+      }, 200); // 200ms delay
     }
   };
 
@@ -557,7 +544,7 @@ export default function GameBoard() {
 
           <button 
             onClick={() => handleDelayedAction(nextRound)}
-            className="w-full max-w-xs py-5 bg-slate-900 text-white rounded-2xl font-black tracking-[0.2em] shadow-2xl active:scale-95 transition-transform border border-slate-700"
+            className="next-match-btn"
           >
             NEXT MATCH
           </button>
@@ -584,7 +571,7 @@ export default function GameBoard() {
           
           <button 
             onClick={() => handleDelayedAction(playAgain)}
-            className="px-10 py-5 bg-white border-2 border-slate-300 shadow-xl rounded-2xl text-slate-900 font-black tracking-[0.2em] active:scale-95 transition-all"
+            className="next-match-btn" // Reusing the same badass button!
           >
             PLAY AGAIN
           </button>
