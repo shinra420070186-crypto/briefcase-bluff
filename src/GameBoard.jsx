@@ -220,7 +220,7 @@ const GlobalStyles = () => (
     .poda-input-mask { pointer-events: none; width: 100px; height: 20px; position: absolute; background: linear-gradient(90deg, transparent, #010201); top: 18px; left: 70px; }
     .poda-pink-mask { pointer-events: none; width: 30px; height: 20px; position: absolute; background: #cf30aa; top: 10px; left: 5px; filter: blur(20px); opacity: 0.8; transition: all 2s; }
     .poda-main:hover > .poda-pink-mask { opacity: 0; }
-    .poda-white, .poda-border, .poda-darkBorderBg, .poda-glow { max-height: 70px; max-width: 314px; height: 100%; width: 100%; position: absolute; overflow: hidden; z-index: -1; border-radius: 12px; transform: translateZ(0); }
+    .poda-white, .poda-border, .poda-darkBorderBg, .poda-glow { max-height: 70px; max-width: 314px; height: 100%; width: 100%; position: absolute; overflow: hidden; z-index: -1; border-radius: 12px; filter: blur(3px); }
     .poda-white { max-height: 63px; max-width: 307px; border-radius: 10px; filter: blur(2px); }
     .poda-white::before { content: ""; z-index: -2; text-align: center; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(83deg); position: absolute; width: 600px; height: 600px; background-repeat: no-repeat; background-position: 0 0; filter: brightness(1.4); background-image: conic-gradient(rgba(0,0,0,0) 0%, #a099d8, rgba(0,0,0,0) 8%, rgba(0,0,0,0) 50%, #dfa2da, rgba(0,0,0,0) 58%); transition: all 2s; will-change: transform; }
     .poda-border { max-height: 59px; max-width: 303px; border-radius: 11px; filter: blur(0.5px); }
@@ -529,6 +529,7 @@ export default function GameBoard() {
   const [newPlayerName, setNewPlayerName] = useState('');
   const [isHoldingCard, setIsHoldingCard] = useState(false);
   const [hasPeeked, setHasPeeked] = useState(false);
+  const [isMinimizing, setIsMinimizing] = useState(false);
   
   // Rule Modal Controls & Theme Controls
   const [showRules, setShowRules] = useState(false);
@@ -537,6 +538,15 @@ export default function GameBoard() {
   useEffect(() => {
     if (phase === 'peek') setHasPeeked(false);
   }, [phase]);
+
+  // PWA Lag Fix: Pause heavy animations when app is backgrounded
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      setIsMinimizing(document.visibilityState === 'hidden');
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, []);
 
   // Original instant handler for fast UI actions (Add/Remove players, Rules)
   const handleAction = (actionCallback, soundEffect = sfx.tap) => {
@@ -586,6 +596,16 @@ export default function GameBoard() {
   return (
     <div className="relative flex flex-col items-center justify-center min-h-[100dvh] p-4 bg-[#FAF9F6] font-sans text-slate-800 select-none overflow-x-hidden w-full">
       
+      {/* PWA Backgrounding Lag Fix */}
+      {isMinimizing && (
+        <style>{`
+          * {
+            animation-play-state: paused !important;
+            transition: none !important;
+          }
+        `}</style>
+      )}
+
       <GlobalStyles />
 
       {/* --- BLOB RULE CARD OVERLAY --- */}
