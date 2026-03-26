@@ -88,12 +88,12 @@ const GlobalStyles = () => (
     .animate-jello-vertical { animation: jello-vertical 0.7s both; }
 
     /* ====================================================
-       NEW: RULE CARD CSS (Blob Design)
+       NEW: RULE CARD CSS (Blob Design with Pixel Trajectory Fix)
        ==================================================== */
     .rule-card {
       position: relative;
-      width: 320px; /* Scaled up to fit game rules */
-      height: 420px; /* Scaled up to fit game rules */
+      width: 320px;
+      height: 420px;
       border-radius: 14px;
       z-index: 1111;
       overflow: hidden;
@@ -101,7 +101,7 @@ const GlobalStyles = () => (
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      box-shadow: 0px 15px 50px rgba(0,0,0,0.5); /* Tweaked shadow to look better on dark overlay */
+      box-shadow: 0px 15px 50px rgba(0,0,0,0.5); 
     }
 
     .rule-bg {
@@ -121,14 +121,14 @@ const GlobalStyles = () => (
     .rule-blob {
       position: absolute;
       z-index: 1;
-      top: 50%;
-      left: 50%;
-      width: 200px;
-      height: 200px;
+      top: 0;
+      left: 0;
+      width: 250px;
+      height: 250px;
       border-radius: 50%;
       background-color: #ff0000;
       opacity: 1;
-      filter: blur(12px);
+      filter: blur(20px);
       animation: blob-bounce 5s infinite ease;
     }
 
@@ -136,7 +136,7 @@ const GlobalStyles = () => (
       position: relative;
       z-index: 3;
       padding: 30px;
-      color: #333; /* Dark text so it's readable on the white frosted bg */
+      color: #333; 
       display: flex;
       flex-direction: column;
       gap: 16px;
@@ -148,18 +148,19 @@ const GlobalStyles = () => (
       font-size: 24px;
       text-transform: uppercase;
       font-weight: 900;
-      color: #ff0000; /* Matches the blob */
+      color: #ff0000; 
       text-align: center;
       margin-bottom: 10px;
       letter-spacing: 2px;
     }
 
+    /* Fixed Pixel Trajectory to perfectly outline the 320x420 card */
     @keyframes blob-bounce {
-      0% { transform: translate(-100%, -100%) translate3d(0, 0, 0); }
-      25% { transform: translate(-100%, -100%) translate3d(100%, 0, 0); }
-      50% { transform: translate(-100%, -100%) translate3d(100%, 100%, 0); }
-      75% { transform: translate(-100%, -100%) translate3d(0, 100%, 0); }
-      100% { transform: translate(-100%, -100%) translate3d(0, 0, 0); }
+      0%   { transform: translate(-50px, -50px); } /* Top Left */
+      25%  { transform: translate(120px, -50px); } /* Top Right */
+      50%  { transform: translate(120px, 220px); } /* Bottom Right */
+      75%  { transform: translate(-50px, 220px); } /* Bottom Left */
+      100% { transform: translate(-50px, -50px); } /* Top Left */
     }
 
     /* Shine Text CSS */
@@ -245,9 +246,7 @@ const GlobalStyles = () => (
     .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__clouds { bottom: -4.062em; }
     .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__stars-container { top: 50%; transform: translateY(-50%); }
 
-    /* ====================================================
-       CEVOROB BURGER MENU CSS (Scaled Down)
-       ==================================================== */
+    /* CEVOROB BURGER MENU CSS (Scaled Down) */
     .burger {
       position: relative;
       width: 24px;
@@ -279,9 +278,7 @@ const GlobalStyles = () => (
     .burger input:checked ~ span:nth-of-type(2) { width: 0%; opacity: 0; }
     .burger input:checked ~ span:nth-of-type(3) { transform: rotate(-45deg); top: 15px; left: 4px; }
 
-    /* ====================================================
-       WENDELL47 BUTTON CSS (Hide & Proceed Only)
-       ==================================================== */
+    /* WENDELL47 BUTTON CSS (Hide & Proceed Only) */
     .wendell-btn {
       display: inline-flex;
       align-items: center;
@@ -304,16 +301,8 @@ const GlobalStyles = () => (
       outline: none;
       -webkit-tap-highlight-color: transparent;
     }
-    
-    .wendell-btn:hover {
-      background: rgb(193, 228, 248);
-      color: rgb(33, 0, 85);
-    }
-    
-    .wendell-btn:active {
-      transform: scale(0.97);
-    }
-    
+    .wendell-btn:hover { background: rgb(193, 228, 248); color: rgb(33, 0, 85); }
+    .wendell-btn:active { transform: scale(0.97); }
     .wendell-hoverEffect {
       position: absolute;
       bottom: 0;
@@ -326,15 +315,9 @@ const GlobalStyles = () => (
       z-index: 1;
       pointer-events: none;
     }
-    
     .wendell-hoverEffect div {
       background: rgb(222, 0, 75);
-      background: linear-gradient(
-        90deg,
-        rgba(222, 0, 75, 1) 0%,
-        rgba(191, 70, 255, 1) 49%,
-        rgba(0, 212, 255, 1) 100%
-      );
+      background: linear-gradient(90deg, rgba(222, 0, 75, 1) 0%, rgba(191, 70, 255, 1) 49%, rgba(0, 212, 255, 1) 100%);
       border-radius: 40rem;
       width: 25rem; 
       height: 25rem; 
@@ -343,27 +326,11 @@ const GlobalStyles = () => (
       animation: wendell-effect infinite 3s linear;
       opacity: 0.5;
     }
-    
-    .wendell-btn:hover .wendell-hoverEffect div {
-      width: 21rem;
-      height: 21rem;
-    }
-    
-    @keyframes wendell-effect {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+    .wendell-btn:hover .wendell-hoverEffect div { width: 21rem; height: 21rem; }
+    @keyframes wendell-effect { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .wendell-text { position: relative; z-index: 2; letter-spacing: 0.2em; text-transform: uppercase; }
 
-    .wendell-text {
-      position: relative;
-      z-index: 2;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-
-    /* ====================================================
-       STEALTHWORM BUTTON CSS (Start Match Only)
-       ==================================================== */
+    /* STEALTHWORM BUTTON CSS (Start Match Only) */
     .stealth-btn {
       display: flex;
       justify-content: center;
@@ -385,41 +352,11 @@ const GlobalStyles = () => (
       -webkit-tap-highlight-color: transparent;
       position: relative;
     }
-    .stealth-btn:disabled {
-      opacity: 0.5;
-      pointer-events: none;
-      filter: grayscale(1);
-    }
-    .stealth-container-stars {
-      position: absolute;
-      z-index: -1;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      transition: 0.5s;
-      backdrop-filter: blur(1rem);
-      border-radius: 5rem;
-    }
-    .stealth-strong {
-      z-index: 2;
-      font-size: 1.125rem;
-      font-weight: 900;
-      letter-spacing: 0.2em;
-      color: #ffffff;
-      text-shadow: 0 0 4px white;
-    }
-    .stealth-glow {
-      position: absolute;
-      display: flex;
-      width: 12rem;
-    }
-    .stealth-circle {
-      width: 100%;
-      height: 30px;
-      filter: blur(2rem);
-      animation: stealth_pulse_3011 4s infinite;
-      z-index: -1;
-    }
+    .stealth-btn:disabled { opacity: 0.5; pointer-events: none; filter: grayscale(1); }
+    .stealth-container-stars { position: absolute; z-index: -1; width: 100%; height: 100%; overflow: hidden; transition: 0.5s; backdrop-filter: blur(1rem); border-radius: 5rem; }
+    .stealth-strong { z-index: 2; font-size: 1.125rem; font-weight: 900; letter-spacing: 0.2em; color: #ffffff; text-shadow: 0 0 4px white; text-transform: uppercase; }
+    .stealth-glow { position: absolute; display: flex; width: 12rem; }
+    .stealth-circle { width: 100%; height: 30px; filter: blur(2rem); animation: stealth_pulse_3011 4s infinite; z-index: -1; }
     .stealth-circle:nth-of-type(1) { background: rgba(254, 83, 186, 0.636); }
     .stealth-circle:nth-of-type(2) { background: rgba(142, 81, 234, 0.704); }
     .stealth-btn:hover .stealth-container-stars { z-index: 1; background-color: #212121; }
@@ -429,7 +366,6 @@ const GlobalStyles = () => (
     .stealth-stars { position: relative; background: transparent; width: 200rem; height: 200rem; }
     .stealth-stars::after { content: ""; position: absolute; top: -10rem; left: -100rem; width: 100%; height: 100%; animation: stealth_animStarRotate 90s linear infinite; background-image: radial-gradient(#ffffff 1px, transparent 1%); background-size: 50px 50px; }
     .stealth-stars::before { content: ""; position: absolute; top: 0; left: -50%; width: 170%; height: 500%; animation: stealth_animStar 60s linear infinite; background-image: radial-gradient(#ffffff 1px, transparent 1%); background-size: 50px 50px; opacity: 0.5; }
-    
     @keyframes stealth_animStar { from { transform: translateY(0); } to { transform: translateY(-135rem); } }
     @keyframes stealth_animStarRotate { from { transform: rotate(360deg); } to { transform: rotate(0); } }
     @keyframes stealth_gradient_301 { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
