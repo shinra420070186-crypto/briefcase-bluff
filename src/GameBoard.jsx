@@ -39,7 +39,7 @@ const GAME_STYLES = `
   @keyframes rotate-pastel-reverse { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(-360deg); } }
 
   /* Burger Menu */
-  .burger { position: relative; width: 30px; height: 22px; background: transparent; cursor: pointer; display: block; z-index: 60; }
+  .burger { position: relative; width: 30px; height: 22px; background: transparent; cursor: pointer; display: block; z-index: 60; -webkit-tap-highlight-color: transparent; }
   .burger input { display: none; }
   .burger span { display: block; position: absolute; height: 3px; width: 100%; background: #fff; border-radius: 9px; opacity: 1; left: 0; transform: rotate(0deg); transition: .25s ease-in-out; box-shadow: 0 1px 3px rgba(0,0,0,0.5); }
   .burger span:nth-of-type(1) { top: 0px; transform-origin: left center; }
@@ -55,7 +55,7 @@ const GAME_STYLES = `
   .cards .blue { background-color: #3b82f6; }
   .cards .green { background-color: #22c55e; }
   .cards .purple { background-color: #a855f7; }
-  .cards .card { display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; height: 80px; width: 100%; border-radius: 10px; color: white; cursor: pointer; transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 20px rgba(0,0,0,0.3); padding: 10px; outline: none; }
+  .cards .card { display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; height: 80px; width: 100%; border-radius: 10px; color: white; cursor: pointer; transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 20px rgba(0,0,0,0.3); padding: 10px; outline: none; -webkit-tap-highlight-color: transparent; }
   .cards .card p.tip { font-size: 1.1em; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin: 0; transition: all 300ms; }
   .cards .card p.second-text { font-size: 0.8em; opacity: 0; max-height: 0; font-weight: bold; overflow: hidden; transition: all 400ms ease; margin: 0; }
   .cards .card:hover, .cards .card:focus { transform: scale(1.05, 1.05); z-index: 10; height: 110px; }
@@ -69,7 +69,7 @@ const GAME_STYLES = `
   .magic-card:hover::after { opacity: 0; }
 
   /* UNIFIED GLOWING NEON BUTTONS */
-  .neon-btn { cursor: pointer; color: #fff; font-size: 16px; font-weight: 900; letter-spacing: 2px; border-radius: 1rem; border: none; position: relative; background: #100720; transition: 0.1s; display: flex; align-items: center; justify-content: center; outline: none; z-index: 10; }
+  .neon-btn { cursor: pointer; color: #fff; font-size: 16px; font-weight: 900; letter-spacing: 2px; border-radius: 1rem; border: none; position: relative; background: #100720; transition: 0.1s; display: flex; align-items: center; justify-content: center; outline: none; z-index: 10; -webkit-tap-highlight-color: transparent; }
   .neon-btn::after { content: ''; width: 100%; height: 100%; background-image: radial-gradient(circle farthest-corner at 10% 20%, rgba(255,94,247,1) 17.8%, rgba(2,245,255,1) 100.2%); filter: blur(15px); z-index: -1; position: absolute; left: 0; top: 0; border-radius: 1rem; }
   .neon-btn:active { transform: scale(0.9) rotate(3deg); background: radial-gradient(circle farthest-corner at 10% 20%, rgba(255,94,247,1) 17.8%, rgba(2,245,255,1) 100.2%); transition: 0.2s; }
   .neon-btn:disabled { opacity: 0.5; pointer-events: none; }
@@ -82,9 +82,8 @@ const GAME_STYLES = `
 
   /* Poda Input */
   .poda { display: flex; align-items: center; justify-content: center; position: relative; width: 100%; max-width: 314px; margin: 0 auto; }
-  .poda-input { background-color: #010201; border: none; width: 100%; height: 56px; border-radius: 10px; color: white; padding-inline: 59px; font-size: 16px; font-weight: bold; }
+  .poda-input { background-color: #010201; border: none; width: 100%; height: 56px; border-radius: 10px; color: white; padding-inline: 59px; font-size: 16px; font-weight: bold; outline: none; }
   .poda-input::placeholder { color: #5a545a; font-weight: normal; }
-  .poda-input:focus { outline: none; }
   .poda-main { position: relative; width: 100%; }
   .poda-main:focus-within > .poda-input-mask { display: none; }
   .poda-input-mask { pointer-events: none; width: 100px; height: 20px; position: absolute; background: linear-gradient(90deg, transparent, #010201); top: 18px; left: 70px; }
@@ -99,7 +98,7 @@ const GAME_STYLES = `
   .poda-darkBorderBg::before { content: ""; z-index: -2; text-align: center; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(82deg); position: absolute; width: 600px; height: 600px; background-repeat: no-repeat; background-position: 0 0; background-image: conic-gradient(rgba(0,0,0,0), #18116a, rgba(0,0,0,0) 10%, rgba(0,0,0,0) 50%, #6e1b60, rgba(0,0,0,0) 60%); transition: all 2s; }
   .poda-glow { overflow: hidden; filter: blur(30px); opacity: 0.4; max-height: 130px; max-width: 354px; }
   .poda-glow::before { content: ""; z-index: -2; text-align: center; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(60deg); position: absolute; width: 999px; height: 999px; background-repeat: no-repeat; background-position: 0 0; background-image: conic-gradient(#000, #402fb5 5%, #000 38%, #000 50%, #cf30aa 60%, #000 87%); transition: all 2s; }
-  .poda-add-btn { position: absolute; top: 8px; right: 8px; display: flex; align-items: center; justify-content: center; z-index: 2; max-height: 40px; max-width: 38px; height: 100%; width: 100%; isolation: isolate; overflow: hidden; border-radius: 10px; background: linear-gradient(180deg, #161329, black, #1d1b4b); border: 1px solid transparent; cursor: pointer; }
+  .poda-add-btn { position: absolute; top: 8px; right: 8px; display: flex; align-items: center; justify-content: center; z-index: 2; max-height: 40px; max-width: 38px; height: 100%; width: 100%; isolation: isolate; overflow: hidden; border-radius: 10px; background: linear-gradient(180deg, #161329, black, #1d1b4b); border: 1px solid transparent; cursor: pointer; -webkit-tap-highlight-color: transparent; }
   .poda-add-btn:active { transform: scale(0.95); }
   .poda-filterBorder { height: 42px; width: 40px; position: absolute; overflow: hidden; top: 7px; right: 7px; border-radius: 10px; pointer-events: none; }
   .poda-filterBorder::before { content: ""; text-align: center; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(90deg); position: absolute; width: 600px; height: 600px; background-repeat: no-repeat; background-position: 0 0; filter: brightness(1.35); background-image: conic-gradient(rgba(0,0,0,0), #3d3a4f, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 50%, #3d3a4f, rgba(0,0,0,0) 100%); animation: p-rotate 4s linear infinite; }
@@ -107,7 +106,7 @@ const GAME_STYLES = `
   @keyframes p-rotate { 100% { transform: translate(-50%, -50%) rotate(450deg); } }
 
   /* Day/Night Theme Switch */
-  .theme-switch { --toggle-size: 8px; --container-width: 5.625em; --container-height: 2.5em; --container-radius: 6.25em; --container-light-bg: #3D7EAE; --container-night-bg: #1D1F2C; --circle-container-diameter: 3.375em; --sun-moon-diameter: 2.125em; --sun-bg: #ECCA2F; --moon-bg: #C4C9D1; --spot-color: #959DB1; --circle-container-offset: calc((var(--circle-container-diameter) - var(--container-height)) / 2 * -1); --stars-color: #fff; --clouds-color: #F3FDFF; --back-clouds-color: #AACADF; --transition: .5s cubic-bezier(0, -0.02, 0.4, 1.25); --circle-transition: .3s cubic-bezier(0, -0.02, 0.35, 1.17); box-sizing: border-box; font-size: var(--toggle-size); display: block; cursor: pointer; }
+  .theme-switch { --toggle-size: 8px; --container-width: 5.625em; --container-height: 2.5em; --container-radius: 6.25em; --container-light-bg: #3D7EAE; --container-night-bg: #1D1F2C; --circle-container-diameter: 3.375em; --sun-moon-diameter: 2.125em; --sun-bg: #ECCA2F; --moon-bg: #C4C9D1; --spot-color: #959DB1; --circle-container-offset: calc((var(--circle-container-diameter) - var(--container-height)) / 2 * -1); --stars-color: #fff; --clouds-color: #F3FDFF; --back-clouds-color: #AACADF; --transition: .5s cubic-bezier(0, -0.02, 0.4, 1.25); --circle-transition: .3s cubic-bezier(0, -0.02, 0.35, 1.17); box-sizing: border-box; font-size: var(--toggle-size); display: block; cursor: pointer; -webkit-tap-highlight-color: transparent; }
   .theme-switch *, .theme-switch *::before, .theme-switch *::after { box-sizing: border-box; margin: 0; padding: 0; font-size: var(--toggle-size); }
   .theme-switch__container { width: var(--container-width); height: var(--container-height); background-color: var(--container-light-bg); border-radius: var(--container-radius); overflow: hidden; cursor: pointer; box-shadow: 0em -0.062em 0.062em rgba(0, 0, 0, 0.25), 0em 0.062em 0.125em rgba(255, 255, 255, 0.94); transition: var(--transition); position: relative; }
   .theme-switch__container::before { content: ""; position: absolute; z-index: 1; inset: 0; box-shadow: 0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset, 0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset; border-radius: var(--container-radius); }
@@ -153,10 +152,8 @@ const MorningSky = () => (
   </div>
 );
 
-// THE FIX: This wrapper sits behind the lobby UI and fades between Morning/Night 
-// without destroying the components, fixing the animation glitch.
 const LobbySky = ({ isDayMode }) => (
-  <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
+  <div className="absolute inset-0 w-full h-full z-0 pointer-events-none bg-[#050505]">
     <div className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${isDayMode ? 'opacity-0' : 'opacity-100'}`}>
       <MidnightSky />
     </div>
@@ -213,7 +210,6 @@ const FlipCard = ({ isFlipped, status }) => {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
@@ -373,7 +369,6 @@ export default function GameBoard() {
               The Deck
             </h1>
             
-            {/* NEON ANIMATED INPUT */}
             <div className="w-full mb-10 flex justify-center">
               <div className="poda">
                 <div className="poda-glow"></div>
