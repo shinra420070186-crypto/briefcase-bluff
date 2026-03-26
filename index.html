@@ -7,41 +7,40 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <link rel="manifest" href="/manifest.json" />
-
-    <meta name="theme-color" content="#B8E3E9" />
+    <meta name="theme-color" content="#050505" />
 
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="The Deck" />
-
     <link rel="apple-touch-icon" href="/icon-512.png" />
 
     <style>
       :root {
         --sat: env(safe-area-inset-top);
         --sab: env(safe-area-inset-bottom);
-        --sal: env(safe-area-inset-left);
-        --sar: env(safe-area-inset-right);
+      }
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #050505;
       }
       #root {
+        height: 100%;
+        /* These ensure content doesn't hide behind a notch if you have buttons at the very top/bottom */
         padding-top: env(safe-area-inset-top);
         padding-bottom: env(safe-area-inset-bottom);
-        padding-left: env(safe-area-inset-left);
-        padding-right: env(safe-area-inset-right);
       }
     </style>
   </head>
-  <body class="bg-[#FAF9F6] text-slate-800 font-sans select-none touch-none overflow-x-hidden">
+  <body class="select-none touch-none overflow-hidden">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/service-worker.js').then(registration => {
-            console.log('SW registered: ', registration);
-          }).catch(registrationError => {
-            console.log('SW registration failed: ', registrationError);
-          });
+          navigator.serviceWorker.register('/service-worker.js');
         });
       }
     </script>
