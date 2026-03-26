@@ -4,6 +4,7 @@
   "short_name": "The Deck",
   "start_url": "/?fullscreen=true",
   "display": "fullscreen",
+  "display_override": ["window-controls-overlay", "standalone"],
   "orientation": "portrait",
   "theme_color": "#050505",
   "background_color": "#050505",
