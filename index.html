@@ -2,27 +2,20 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- FIX: viewport-fit=cover fills the notch/status bar area on iOS -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>The Deck</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json" />
 
-    <!-- Theme color for Android Chrome address bar -->
     <meta name="theme-color" content="#B8E3E9" />
 
-    <!-- === iOS PWA: Removes Safari browser chrome when launched from home screen === -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <!-- "black-translucent" lets your bg color bleed behind the status bar -->
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="The Deck" />
 
-    <!-- iOS touch icon (shown when user taps "Add to Home Screen") -->
-    <link rel="apple-touch-icon" href="/icon-192.png" />
+    <link rel="apple-touch-icon" href="/icon-512.png" />
 
-    <!-- FIX: Padding-safe areas so content doesn't hide behind notch or home bar -->
     <style>
       :root {
         --sat: env(safe-area-inset-top);
