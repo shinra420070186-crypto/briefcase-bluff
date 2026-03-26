@@ -246,7 +246,7 @@ const GlobalStyles = () => (
     .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__clouds { bottom: -4.062em; }
     .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__stars-container { top: 50%; transform: translateY(-50%); }
 
-    /* CEVOROB BURGER MENU CSS */
+    /* CEVOROB BURGER MENU CSS (Scaled to 50% size) */
     .burger {
       position: relative;
       width: 40px;
@@ -256,6 +256,8 @@ const GlobalStyles = () => (
       display: block;
       z-index: 60;
       -webkit-tap-highlight-color: transparent;
+      transform: scale(0.5); /* Shrinks the whole element exactly in half */
+      transform-origin: top left;
     }
     .burger input { display: none; }
     .burger span {
@@ -263,7 +265,7 @@ const GlobalStyles = () => (
       position: absolute;
       height: 4px;
       width: 100%;
-      background: white; /* Changed to white for dark backgrounds */
+      background: white; /* Stays white for visibility */
       border-radius: 9px;
       opacity: 1;
       left: 0;
@@ -319,9 +321,7 @@ const GlobalStyles = () => (
     @keyframes stealth_gradient_301 { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
     @keyframes stealth_pulse_3011 { 0% { transform: scale(0.75); box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); } 100% { transform: scale(0.75); box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); } }
 
-    /* ====================================================
-       NEW: BARISDOGANSUTCU SVG BUTTON (Hide & Proceed Only)
-       ==================================================== */
+    /* NEW: BARISDOGANSUTCU SVG BUTTON (Hide & Proceed Only) */
     .play-btn {
       display: flex;
       align-items: center;
@@ -683,7 +683,7 @@ export default function GameBoard() {
             <FlipCard isFlipped={isHoldingCard} status={cardStatus} />
           </div>
 
-          {/* NEW: SVG PLAY/NOW BUTTON - REPLACES HIDE & PROCEED */}
+          {/* EXACT SVG PLAY/NOW BUTTON - APPLIED ONLY TO HIDE & PROCEED */}
           <button 
             onClick={() => handleDelayedAction(goToChoicePhase, sfx.tap, 850)}
             disabled={!hasPeeked || isHoldingCard}
