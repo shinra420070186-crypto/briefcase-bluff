@@ -3,267 +3,143 @@ import { useGameStore } from './store';
 import { sfx } from './sfx';
 
 // ==============================================
-// 1. NIGHT SKY BACKGROUND (LOBBY ONLY)
+// 1. ALL CSS STYLES (STATIC TO PREVENT ANIMATION GLITCHES)
 // ==============================================
-const MidnightSky = () => (
-  <div className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none" style={{ backgroundColor: '#050505' }}>
-    <style>{`
-      .stars { position: absolute; inset: 0; background-repeat: repeat; pointer-events: none; }
-      .stars-1 { background-image: radial-gradient(1px 1px at 10% 10%, #fff, transparent), radial-gradient(1px 1px at 30% 20%, #fff, transparent), radial-gradient(1px 1px at 50% 50%, #fff, transparent), radial-gradient(1px 1px at 70% 30%, #fff, transparent), radial-gradient(1px 1px at 90% 10%, #fff, transparent); background-size: 100px 100px; animation: twinkle 3s ease-in-out infinite; }
-      .stars-2 { background-image: radial-gradient(1.5px 1.5px at 20% 40%, #fff, transparent), radial-gradient(1.5px 1.5px at 60% 85%, #fff, transparent), radial-gradient(1.5px 1.5px at 85% 65%, #fff, transparent); background-size: 150px 150px; animation: twinkle 5s ease-in-out infinite 1s; }
-      .stars-3 { background-image: radial-gradient(2px 2px at 40% 70%, #fff, transparent), radial-gradient(2px 2px at 10% 80%, #fff, transparent), radial-gradient(2px 2px at 80% 40%, #fff, transparent); background-size: 200px 200px; animation: twinkle 7s ease-in-out infinite 2s; }
-      .meteor { position: absolute; width: 1.5px; height: 1.5px; background: #fff; border-radius: 50%; box-shadow: 0 0 5px 1px rgba(255, 255, 255, 0.5); opacity: 0; pointer-events: none; }
-      .meteor::after { content: ""; position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 1px; background: linear-gradient(90deg, #fff, transparent); }
-      .m1 { top: 10%; left: 110%; animation: shoot 8s linear infinite; }
-      .m2 { top: 30%; left: 110%; animation: shoot 12s linear infinite 4s; }
-      .m3 { top: 50%; left: 110%; animation: shoot 10s linear infinite 2s; }
-      .moon { position: absolute; top: 15%; right: 15%; width: 40px; height: 40px; border-radius: 50%; background: transparent; box-shadow: 7px 7px 0 0 #fdfbd3; filter: drop-shadow(0 0 7px rgba(253, 251, 211, 0.4)); z-index: 10; }
-      @keyframes twinkle { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
-      @keyframes shoot { 0% { transform: translateX(0) translateY(0) rotate(-35deg); opacity: 0; } 5% { opacity: 1; } 15% { transform: translateX(-1500px) translateY(1000px) rotate(-35deg); opacity: 0; } 100% { transform: translateX(-1500px) translateY(1000px) rotate(-35deg); opacity: 0; } }
-    `}</style>
-    <div className="stars stars-1"></div>
-    <div className="stars stars-2"></div>
-    <div className="stars stars-3"></div>
-    <div className="meteor m1"></div>
-    <div className="meteor m2"></div>
-    <div className="meteor m3"></div>
-    <div className="moon"></div>
-  </div>
-);
+const GAME_STYLES = `
+  /* Night Sky */
+  .stars { position: absolute; inset: 0; background-repeat: repeat; pointer-events: none; }
+  .stars-1 { background-image: radial-gradient(1px 1px at 10% 10%, #fff, transparent), radial-gradient(1px 1px at 30% 20%, #fff, transparent), radial-gradient(1px 1px at 50% 50%, #fff, transparent), radial-gradient(1px 1px at 70% 30%, #fff, transparent), radial-gradient(1px 1px at 90% 10%, #fff, transparent); background-size: 100px 100px; animation: twinkle 3s ease-in-out infinite; }
+  .stars-2 { background-image: radial-gradient(1.5px 1.5px at 20% 40%, #fff, transparent), radial-gradient(1.5px 1.5px at 60% 85%, #fff, transparent), radial-gradient(1.5px 1.5px at 85% 65%, #fff, transparent); background-size: 150px 150px; animation: twinkle 5s ease-in-out infinite 1s; }
+  .stars-3 { background-image: radial-gradient(2px 2px at 40% 70%, #fff, transparent), radial-gradient(2px 2px at 10% 80%, #fff, transparent), radial-gradient(2px 2px at 80% 40%, #fff, transparent); background-size: 200px 200px; animation: twinkle 7s ease-in-out infinite 2s; }
+  .meteor { position: absolute; width: 1.5px; height: 1.5px; background: #fff; border-radius: 50%; box-shadow: 0 0 5px 1px rgba(255, 255, 255, 0.5); opacity: 0; pointer-events: none; }
+  .meteor::after { content: ""; position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 1px; background: linear-gradient(90deg, #fff, transparent); }
+  .m1 { top: 10%; left: 110%; animation: shoot 8s linear infinite; }
+  .m2 { top: 30%; left: 110%; animation: shoot 12s linear infinite 4s; }
+  .m3 { top: 50%; left: 110%; animation: shoot 10s linear infinite 2s; }
+  .moon { position: absolute; top: 15%; right: 15%; width: 40px; height: 40px; border-radius: 50%; background: transparent; box-shadow: 7px 7px 0 0 #fdfbd3; filter: drop-shadow(0 0 7px rgba(253, 251, 211, 0.4)); z-index: 10; }
+  @keyframes twinkle { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+  @keyframes shoot { 0% { transform: translateX(0) translateY(0) rotate(-35deg); opacity: 0; } 5% { opacity: 1; } 15% { transform: translateX(-1500px) translateY(1000px) rotate(-35deg); opacity: 0; } 100% { transform: translateX(-1500px) translateY(1000px) rotate(-35deg); opacity: 0; } }
+
+  /* Morning Sky */
+  .motes { position: absolute; inset: 0; background-repeat: repeat; pointer-events: none; }
+  .motes-1 { background-image: radial-gradient(1.5px 1.5px at 15% 15%, rgba(255,255,255,0.7), transparent), radial-gradient(1.5px 1.5px at 35% 25%, rgba(255,255,255,0.7), transparent), radial-gradient(1.5px 1.5px at 55% 55%, rgba(255,255,255,0.7), transparent), radial-gradient(1.5px 1.5px at 75% 35%, rgba(255,255,255,0.7), transparent), radial-gradient(1.5px 1.5px at 95% 15%, rgba(255,255,255,0.7), transparent); background-size: 100px 100px; animation: twinkle 4s ease-in-out infinite; }
+  .motes-2 { background-image: radial-gradient(2px 2px at 25% 45%, rgba(255,255,255,0.5), transparent), radial-gradient(2px 2px at 65% 85%, rgba(255,255,255,0.5), transparent), radial-gradient(2px 2px at 85% 70%, rgba(255,255,255,0.5), transparent); background-size: 150px 150px; animation: twinkle 6s ease-in-out infinite 2s; }
+  .wind { position: absolute; width: 60px; height: 2px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent); border-radius: 50%; opacity: 0; pointer-events: none; }
+  .w1 { top: 15%; left: 110%; animation: breeze 6s linear infinite; }
+  .w2 { top: 40%; left: 110%; animation: breeze 10s linear infinite 3s; }
+  .w3 { top: 60%; left: 110%; animation: breeze 8s linear infinite 1s; }
+  .sun { position: absolute; top: 15%; right: 15%; width: 50px; height: 50px; border-radius: 50%; background: #FFD700; box-shadow: 0 0 40px 15px rgba(255, 215, 0, 0.5); z-index: 10; }
+  @keyframes breeze { 0% { transform: translateX(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateX(-1500px); opacity: 0; } }
+
+  /* Pastel Glow Background */
+  .pastel-container { position: relative; width: 100%; height: 100%; overflow: hidden; background: radial-gradient(circle, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.1)); }
+  .pastel-container::before, .pastel-container::after { content: ""; position: absolute; top: 50%; left: 50%; width: 200%; height: 200%; background: conic-gradient(from 0deg, #ff9aa2, #ffb7b2, #ffdac1, #e2f0cb, #a2e4ff, #c9afff, #ffb7b2, #ff9aa2); transform: translate(-50%, -50%); animation: rotate-pastel 8s linear infinite; filter: blur(50px); opacity: 0.8; }
+  .pastel-container::after { width: 180%; height: 180%; animation: rotate-pastel-reverse 10s linear infinite; opacity: 0.6; }
+  @keyframes rotate-pastel { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+  @keyframes rotate-pastel-reverse { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(-360deg); } }
+
+  /* Burger Button CSS */
+  .burger { position: relative; width: 30px; height: 22px; background: transparent; cursor: pointer; display: block; z-index: 60; }
+  .burger input { display: none; }
+  .burger span { display: block; position: absolute; height: 3px; width: 100%; background: #fff; border-radius: 9px; opacity: 1; left: 0; transform: rotate(0deg); transition: .25s ease-in-out; box-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+  .burger span:nth-of-type(1) { top: 0px; transform-origin: left center; }
+  .burger span:nth-of-type(2) { top: 50%; transform: translateY(-50%); transform-origin: left center; }
+  .burger span:nth-of-type(3) { top: 100%; transform-origin: left center; transform: translateY(-100%); }
+  .burger input:checked ~ span:nth-of-type(1) { transform: rotate(45deg); top: 0px; left: 5px; }
+  .burger input:checked ~ span:nth-of-type(2) { width: 0%; opacity: 0; }
+  .burger input:checked ~ span:nth-of-type(3) { transform: rotate(-45deg); top: 21px; left: 5px; }
+
+  /* Kamehame-ha Rule Cards CSS */
+  .cards { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 280px; }
+  .cards .red { background-color: #f43f5e; }
+  .cards .blue { background-color: #3b82f6; }
+  .cards .green { background-color: #22c55e; }
+  .cards .purple { background-color: #a855f7; }
+  .cards .card { display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; height: 80px; width: 100%; border-radius: 10px; color: white; cursor: pointer; transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 20px rgba(0,0,0,0.3); padding: 10px; outline: none; }
+  .cards .card p.tip { font-size: 1.1em; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin: 0; transition: all 300ms; }
+  .cards .card p.second-text { font-size: 0.8em; opacity: 0; max-height: 0; font-weight: bold; overflow: hidden; transition: all 400ms ease; margin: 0; }
+  .cards .card:hover, .cards .card:focus { transform: scale(1.05, 1.05); z-index: 10; height: 110px; }
+  .cards .card:hover p.second-text, .cards .card:focus p.second-text { opacity: 1; max-height: 50px; margin-top: 8px; }
+  .cards:hover > .card:not(:hover), .cards:focus-within > .card:not(:focus) { filter: blur(4px); transform: scale(0.95, 0.95); opacity: 0.7; }
+
+  /* Magic Card CSS */
+  .magic-card { background: var(--bg-gradient, linear-gradient(to left, #f7ba2b 0%, #ea5358 100%)); width: 100%; height: 100%; padding: 5px; border-radius: 1rem; overflow: visible; position: relative; z-index: 1; }
+  .magic-card::after { position: absolute; content: ""; top: 30px; left: 0; right: 0; z-index: -1; height: 100%; width: 100%; transform: scale(0.8); filter: blur(25px); background: var(--bg-gradient, linear-gradient(to left, #f7ba2b 0%, #ea5358 100%)); transition: opacity .5s; }
+  .magic-card-info { background: #181818; color: #ffffff; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 100%; overflow: hidden; border-radius: .7rem; }
+  .magic-card:hover::after { opacity: 0; }
+
+  /* UNIFIED GLOWING NEON BUTTONS */
+  .neon-btn { cursor: pointer; color: #fff; font-size: 16px; font-weight: 900; letter-spacing: 2px; border-radius: 1rem; border: none; position: relative; background: #100720; transition: 0.1s; display: flex; align-items: center; justify-content: center; outline: none; z-index: 10; }
+  .neon-btn::after { content: ''; width: 100%; height: 100%; background-image: radial-gradient(circle farthest-corner at 10% 20%, rgba(255,94,247,1) 17.8%, rgba(2,245,255,1) 100.2%); filter: blur(15px); z-index: -1; position: absolute; left: 0; top: 0; border-radius: 1rem; }
+  .neon-btn:active { transform: scale(0.9) rotate(3deg); background: radial-gradient(circle farthest-corner at 10% 20%, rgba(255,94,247,1) 17.8%, rgba(2,245,255,1) 100.2%); transition: 0.2s; }
+  .neon-btn:disabled { opacity: 0.5; pointer-events: none; }
+  .neon-btn-half { width: 140px; height: 62px; }
+  .neon-btn-wide { width: 100%; max-width: 320px; height: 62px; margin-top: 1rem; }
+
+  /* Shine Text CSS */
+  .shine-text { color: rgba(255, 255, 255, 0.3); background: #222 -webkit-gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.5, #fff)) 0 0 no-repeat; background-image: -webkit-linear-gradient(-40deg, transparent 0%, transparent 40%, #fff 50%, transparent 60%, transparent 100%); -webkit-background-clip: text; -webkit-background-size: 50px; -webkit-animation: zezzz 5s infinite; }
+  @-webkit-keyframes zezzz { 0%, 10% { background-position: -200px; } 20% { background-position: top left; } 100% { background-position: 200px; } }
+
+  /* Neon Animated Input CSS */
+  .poda { display: flex; align-items: center; justify-content: center; position: relative; width: 100%; max-width: 314px; margin: 0 auto; }
+  .poda-input { background-color: #010201; border: none; width: 100%; height: 56px; border-radius: 10px; color: white; padding-inline: 59px; font-size: 16px; font-weight: bold; }
+  .poda-input::placeholder { color: #5a545a; font-weight: normal; }
+  .poda-input:focus { outline: none; }
+  .poda-main { position: relative; width: 100%; }
+  .poda-main:focus-within > .poda-input-mask { display: none; }
+  .poda-input-mask { pointer-events: none; width: 100px; height: 20px; position: absolute; background: linear-gradient(90deg, transparent, #010201); top: 18px; left: 70px; }
+  .poda-pink-mask { pointer-events: none; width: 30px; height: 20px; position: absolute; background: #cf30aa; top: 10px; left: 5px; filter: blur(20px); opacity: 0.8; transition: all 2s; }
+  .poda-main:hover > .poda-pink-mask { opacity: 0; }
+  .poda-white, .poda-border, .poda-darkBorderBg, .poda-glow { max-height: 70px; max-width: 314px; height: 100%; width: 100%; position: absolute; overflow: hidden; z-index: -1; border-radius: 12px; filter: blur(3px); }
+  .poda-white { max-height: 63px; max-width: 307px; border-radius: 10px; filter: blur(2px); }
+  .poda-white::before { content: ""; z-index: -2; text-align: center; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(83deg); position: absolute; width: 600px; height: 600px; background-repeat: no-repeat; background-position: 0 0; filter: brightness(1.4); background-image: conic-gradient(rgba(0,0,0,0) 0%, #a099d8, rgba(0,0,0,0) 8%, rgba(0,0,0,0) 50%, #dfa2da, rgba(0,0,0,0) 58%); transition: all 2s; }
+  .poda-border { max-height: 59px; max-width: 303px; border-radius: 11px; filter: blur(0.5px); }
+  .poda-border::before { content: ""; z-index: -2; text-align: center; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(70deg); position: absolute; width: 600px; height: 600px; filter: brightness(1.3); background-repeat: no-repeat; background-position: 0 0; background-image: conic-gradient(#1c191c, #402fb5 5%, #1c191c 14%, #1c191c 50%, #cf30aa 60%, #1c191c 64%); transition: all 2s; }
+  .poda-darkBorderBg { max-height: 65px; max-width: 312px; }
+  .poda-darkBorderBg::before { content: ""; z-index: -2; text-align: center; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(82deg); position: absolute; width: 600px; height: 600px; background-repeat: no-repeat; background-position: 0 0; background-image: conic-gradient(rgba(0,0,0,0), #18116a, rgba(0,0,0,0) 10%, rgba(0,0,0,0) 50%, #6e1b60, rgba(0,0,0,0) 60%); transition: all 2s; }
+  .poda-glow { overflow: hidden; filter: blur(30px); opacity: 0.4; max-height: 130px; max-width: 354px; }
+  .poda-glow::before { content: ""; z-index: -2; text-align: center; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(60deg); position: absolute; width: 999px; height: 999px; background-repeat: no-repeat; background-position: 0 0; background-image: conic-gradient(#000, #402fb5 5%, #000 38%, #000 50%, #cf30aa 60%, #000 87%); transition: all 2s; }
+  .poda-add-btn { position: absolute; top: 8px; right: 8px; display: flex; align-items: center; justify-content: center; z-index: 2; max-height: 40px; max-width: 38px; height: 100%; width: 100%; isolation: isolate; overflow: hidden; border-radius: 10px; background: linear-gradient(180deg, #161329, black, #1d1b4b); border: 1px solid transparent; cursor: pointer; }
+  .poda-add-btn:active { transform: scale(0.95); }
+  .poda-filterBorder { height: 42px; width: 40px; position: absolute; overflow: hidden; top: 7px; right: 7px; border-radius: 10px; pointer-events: none; }
+  .poda-filterBorder::before { content: ""; text-align: center; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(90deg); position: absolute; width: 600px; height: 600px; background-repeat: no-repeat; background-position: 0 0; filter: brightness(1.35); background-image: conic-gradient(rgba(0,0,0,0), #3d3a4f, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 50%, #3d3a4f, rgba(0,0,0,0) 100%); animation: p-rotate 4s linear infinite; }
+  .poda-search-icon { position: absolute; left: 20px; top: 15px; pointer-events: none; }
+  @keyframes p-rotate { 100% { transform: translate(-50%, -50%) rotate(450deg); } }
+
+  /* Day/Night Theme Switch CSS */
+  .theme-switch { --toggle-size: 8px; --container-width: 5.625em; --container-height: 2.5em; --container-radius: 6.25em; --container-light-bg: #3D7EAE; --container-night-bg: #1D1F2C; --circle-container-diameter: 3.375em; --sun-moon-diameter: 2.125em; --sun-bg: #ECCA2F; --moon-bg: #C4C9D1; --spot-color: #959DB1; --circle-container-offset: calc((var(--circle-container-diameter) - var(--container-height)) / 2 * -1); --stars-color: #fff; --clouds-color: #F3FDFF; --back-clouds-color: #AACADF; --transition: .5s cubic-bezier(0, -0.02, 0.4, 1.25); --circle-transition: .3s cubic-bezier(0, -0.02, 0.35, 1.17); box-sizing: border-box; font-size: var(--toggle-size); display: block; cursor: pointer; }
+  .theme-switch *, .theme-switch *::before, .theme-switch *::after { box-sizing: border-box; margin: 0; padding: 0; font-size: var(--toggle-size); }
+  .theme-switch__container { width: var(--container-width); height: var(--container-height); background-color: var(--container-light-bg); border-radius: var(--container-radius); overflow: hidden; cursor: pointer; box-shadow: 0em -0.062em 0.062em rgba(0, 0, 0, 0.25), 0em 0.062em 0.125em rgba(255, 255, 255, 0.94); transition: var(--transition); position: relative; }
+  .theme-switch__container::before { content: ""; position: absolute; z-index: 1; inset: 0; box-shadow: 0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset, 0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset; border-radius: var(--container-radius); }
+  .theme-switch__checkbox { display: none; }
+  .theme-switch__circle-container { width: var(--circle-container-diameter); height: var(--circle-container-diameter); background-color: rgba(255, 255, 255, 0.1); position: absolute; left: var(--circle-container-offset); top: var(--circle-container-offset); border-radius: var(--container-radius); box-shadow: inset 0 0 0 3.375em rgba(255, 255, 255, 0.1), inset 0 0 0 3.375em rgba(255, 255, 255, 0.1), 0 0 0 0.625em rgba(255, 255, 255, 0.1), 0 0 0 1.25em rgba(255, 255, 255, 0.1); display: flex; transition: var(--circle-transition); pointer-events: none; }
+  .theme-switch__sun-moon-container { pointer-events: auto; position: relative; z-index: 2; width: var(--sun-moon-diameter); height: var(--sun-moon-diameter); margin: auto; border-radius: var(--container-radius); background-color: var(--sun-bg); box-shadow: 0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset, 0em -0.062em 0.062em 0em #a1872a inset; filter: drop-shadow(0.062em 0.125em 0.125em rgba(0, 0, 0, 0.25)) drop-shadow(0em 0.062em 0.125em rgba(0, 0, 0, 0.25)); overflow: hidden; transition: var(--transition); }
+  .theme-switch__moon { transform: translateX(100%); width: 100%; height: 100%; background-color: var(--moon-bg); border-radius: inherit; box-shadow: 0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset, 0em -0.062em 0.062em 0em #969696 inset; transition: var(--transition); position: relative; }
+  .theme-switch__spot { position: absolute; top: 0.75em; left: 0.312em; width: 0.75em; height: 0.75em; border-radius: var(--container-radius); background-color: var(--spot-color); box-shadow: 0em 0.0312em 0.062em rgba(0, 0, 0, 0.25) inset; }
+  .theme-switch__spot:nth-of-type(2) { width: 0.375em; height: 0.375em; top: 0.937em; left: 1.375em; }
+  .theme-switch__spot:nth-last-of-type(3) { width: 0.25em; height: 0.25em; top: 0.312em; left: 0.812em; }
+  .theme-switch__clouds { width: 1.25em; height: 1.25em; background-color: var(--clouds-color); border-radius: var(--container-radius); position: absolute; bottom: -0.625em; left: 0.312em; box-shadow: 0.937em 0.312em var(--clouds-color), -0.312em -0.312em var(--back-clouds-color), 1.437em 0.375em var(--clouds-color), 0.5em -0.125em var(--back-clouds-color), 2.187em 0 var(--clouds-color), 1.25em -0.062em var(--back-clouds-color), 2.937em 0.312em var(--clouds-color), 2em -0.312em var(--back-clouds-color), 3.625em -0.062em var(--clouds-color), 2.625em 0em var(--back-clouds-color), 4.5em -0.312em var(--clouds-color), 3.375em -0.437em var(--back-clouds-color), 4.625em -1.75em 0 0.437em var(--clouds-color), 4em -0.625em var(--back-clouds-color), 4.125em -2.125em 0 0.437em var(--back-clouds-color); transition: 0.5s cubic-bezier(0, -0.02, 0.4, 1.25); }
+  .theme-switch__stars-container { position: absolute; color: var(--stars-color); top: -100%; left: 0.312em; width: 2.75em; height: auto; transition: var(--transition); }
+  .theme-switch__checkbox:checked + .theme-switch__container { background-color: var(--container-night-bg); }
+  .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__circle-container { left: calc(100% - var(--circle-container-offset) - var(--circle-container-diameter)); }
+  .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__circle-container:hover { left: calc(100% - var(--circle-container-offset) - var(--circle-container-diameter) - 0.187em) }
+  .theme-switch__circle-container:hover { left: calc(var(--circle-container-offset) + 0.187em); }
+  .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__moon { transform: translate(0); }
+  .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__clouds { bottom: -4.062em; }
+  .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__stars-container { top: 50%; transform: translateY(-50%); }
+`;
 
 // ==============================================
-// 2. MORNING SKY BACKGROUND (LOBBY ONLY)
-// ==============================================
-const MorningSky = () => (
-  <div className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, #4A90E2 0%, #FFB75E 100%)' }}>
-    <style>{`
-      .motes { position: absolute; inset: 0; background-repeat: repeat; pointer-events: none; }
-      .motes-1 { background-image: radial-gradient(1.5px 1.5px at 15% 15%, rgba(255,255,255,0.7), transparent), radial-gradient(1.5px 1.5px at 35% 25%, rgba(255,255,255,0.7), transparent), radial-gradient(1.5px 1.5px at 55% 55%, rgba(255,255,255,0.7), transparent), radial-gradient(1.5px 1.5px at 75% 35%, rgba(255,255,255,0.7), transparent), radial-gradient(1.5px 1.5px at 95% 15%, rgba(255,255,255,0.7), transparent); background-size: 100px 100px; animation: twinkle 4s ease-in-out infinite; }
-      .motes-2 { background-image: radial-gradient(2px 2px at 25% 45%, rgba(255,255,255,0.5), transparent), radial-gradient(2px 2px at 65% 85%, rgba(255,255,255,0.5), transparent), radial-gradient(2px 2px at 85% 70%, rgba(255,255,255,0.5), transparent); background-size: 150px 150px; animation: twinkle 6s ease-in-out infinite 2s; }
-      .wind { position: absolute; width: 60px; height: 2px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent); border-radius: 50%; opacity: 0; pointer-events: none; }
-      .w1 { top: 15%; left: 110%; animation: breeze 6s linear infinite; }
-      .w2 { top: 40%; left: 110%; animation: breeze 10s linear infinite 3s; }
-      .w3 { top: 60%; left: 110%; animation: breeze 8s linear infinite 1s; }
-      .sun { position: absolute; top: 15%; right: 15%; width: 50px; height: 50px; border-radius: 50%; background: #FFD700; box-shadow: 0 0 40px 15px rgba(255, 215, 0, 0.5); z-index: 10; }
-      @keyframes breeze { 0% { transform: translateX(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateX(-1500px); opacity: 0; } }
-    `}</style>
-    <div className="motes motes-1"></div>
-    <div className="motes motes-2"></div>
-    <div className="wind w1"></div>
-    <div className="wind w2"></div>
-    <div className="wind w3"></div>
-    <div className="sun"></div>
-  </div>
-);
-
-// ==============================================
-// 3. NEW PASTEL GLOW BACKGROUND (ACTIVE GAME)
+// 2. COMPONENTS
 // ==============================================
 const PastelGlowBackground = () => (
   <div className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none" style={{ background: 'linear-gradient(135deg, #ffe8f3, #d9f3ff)' }}>
-    <style>{`
-      .pastel-container {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.1));
-      }
-      .pastel-container::before, .pastel-container::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 200%;
-        height: 200%;
-        background: conic-gradient(from 0deg, #ff9aa2, #ffb7b2, #ffdac1, #e2f0cb, #a2e4ff, #c9afff, #ffb7b2, #ff9aa2);
-        transform: translate(-50%, -50%);
-        animation: rotate-pastel 8s linear infinite;
-        filter: blur(50px);
-        opacity: 0.8;
-      }
-      .pastel-container::after {
-        width: 180%;
-        height: 180%;
-        animation: rotate-pastel-reverse 10s linear infinite;
-        opacity: 0.6;
-      }
-      @keyframes rotate-pastel {
-        0% { transform: translate(-50%, -50%) rotate(0deg); }
-        100% { transform: translate(-50%, -50%) rotate(360deg); }
-      }
-      @keyframes rotate-pastel-reverse {
-        0% { transform: translate(-50%, -50%) rotate(0deg); }
-        100% { transform: translate(-50%, -50%) rotate(-360deg); }
-      }
-    `}</style>
     <div className="pastel-container"></div>
   </div>
 );
 
-// ==============================================
-// 4. GLOBAL STYLES 
-// ==============================================
-const GlobalStyles = () => (
-  <style>{`
-    /* Burger Button CSS */
-    .burger { position: relative; width: 30px; height: 22px; background: transparent; cursor: pointer; display: block; z-index: 60; }
-    .burger input { display: none; }
-    .burger span { display: block; position: absolute; height: 3px; width: 100%; background: #fff; border-radius: 9px; opacity: 1; left: 0; transform: rotate(0deg); transition: .25s ease-in-out; box-shadow: 0 1px 3px rgba(0,0,0,0.5); }
-    .burger span:nth-of-type(1) { top: 0px; transform-origin: left center; }
-    .burger span:nth-of-type(2) { top: 50%; transform: translateY(-50%); transform-origin: left center; }
-    .burger span:nth-of-type(3) { top: 100%; transform-origin: left center; transform: translateY(-100%); }
-    .burger input:checked ~ span:nth-of-type(1) { transform: rotate(45deg); top: 0px; left: 5px; }
-    .burger input:checked ~ span:nth-of-type(2) { width: 0%; opacity: 0; }
-    .burger input:checked ~ span:nth-of-type(3) { transform: rotate(-45deg); top: 21px; left: 5px; }
-
-    /* Kamehame-ha Rule Cards CSS */
-    .cards { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 280px; }
-    .cards .red { background-color: #f43f5e; }
-    .cards .blue { background-color: #3b82f6; }
-    .cards .green { background-color: #22c55e; }
-    .cards .purple { background-color: #a855f7; }
-    .cards .card { display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; height: 80px; width: 100%; border-radius: 10px; color: white; cursor: pointer; transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 20px rgba(0,0,0,0.3); padding: 10px; outline: none; }
-    .cards .card p.tip { font-size: 1.1em; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin: 0; transition: all 300ms; }
-    .cards .card p.second-text { font-size: 0.8em; opacity: 0; max-height: 0; font-weight: bold; overflow: hidden; transition: all 400ms ease; margin: 0; }
-    .cards .card:hover, .cards .card:focus { transform: scale(1.05, 1.05); z-index: 10; height: 110px; }
-    .cards .card:hover p.second-text, .cards .card:focus p.second-text { opacity: 1; max-height: 50px; margin-top: 8px; }
-    .cards:hover > .card:not(:hover), .cards:focus-within > .card:not(:focus) { filter: blur(4px); transform: scale(0.95, 0.95); opacity: 0.7; }
-
-    /* New Magic Card CSS */
-    .magic-card {
-      background: var(--bg-gradient, linear-gradient(to left, #f7ba2b 0%, #ea5358 100%));
-      width: 100%;
-      height: 100%;
-      padding: 5px;
-      border-radius: 1rem;
-      overflow: visible;
-      position: relative;
-      z-index: 1;
-    }
-    .magic-card::after {
-      position: absolute;
-      content: "";
-      top: 30px;
-      left: 0;
-      right: 0;
-      z-index: -1;
-      height: 100%;
-      width: 100%;
-      transform: scale(0.8);
-      filter: blur(25px);
-      background: var(--bg-gradient, linear-gradient(to left, #f7ba2b 0%, #ea5358 100%));
-      transition: opacity .5s;
-    }
-    .magic-card-info {
-      background: #181818;
-      color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      border-radius: .7rem;
-    }
-    .magic-card:hover::after { opacity: 0; }
-
-    /* UNIFIED GLOWING NEON BUTTONS */
-    .neon-btn {
-      cursor: pointer;
-      color: #fff;
-      font-size: 16px;
-      font-weight: 900;
-      letter-spacing: 2px;
-      border-radius: 1rem;
-      border: none;
-      position: relative;
-      background: #100720;
-      transition: 0.1s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      outline: none;
-      z-index: 10;
-    }
-    .neon-btn::after {
-      content: '';
-      width: 100%;
-      height: 100%;
-      background-image: radial-gradient(circle farthest-corner at 10% 20%, rgba(255,94,247,1) 17.8%, rgba(2,245,255,1) 100.2%);
-      filter: blur(15px);
-      z-index: -1;
-      position: absolute;
-      left: 0;
-      top: 0;
-      border-radius: 1rem;
-    }
-    .neon-btn:active {
-      transform: scale(0.9) rotate(3deg);
-      background: radial-gradient(circle farthest-corner at 10% 20%, rgba(255,94,247,1) 17.8%, rgba(2,245,255,1) 100.2%);
-      transition: 0.2s;
-    }
-    .neon-btn:disabled {
-      opacity: 0.5;
-      pointer-events: none;
-    }
-    /* Button Size Modifiers */
-    .neon-btn-half { width: 140px; height: 62px; }
-    .neon-btn-wide { width: 100%; max-width: 320px; height: 62px; margin-top: 1rem; }
-
-    /* Shine Text CSS (THE DECK ANIMATION RESTORED) */
-    .shine-text { color: rgba(255, 255, 255, 0.3); background: #222 -webkit-gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.5, #fff)) 0 0 no-repeat; background-image: -webkit-linear-gradient(-40deg, transparent 0%, transparent 40%, #fff 50%, transparent 60%, transparent 100%); -webkit-background-clip: text; -webkit-background-size: 50px; -webkit-animation: zezzz 5s infinite; }
-    @-webkit-keyframes zezzz { 0%, 10% { background-position: -200px; } 20% { background-position: top left; } 100% { background-position: 200px; } }
-
-    /* Neon Animated Input CSS */
-    .poda { display: flex; align-items: center; justify-content: center; position: relative; width: 100%; max-width: 314px; margin: 0 auto; }
-    .poda-input { background-color: #010201; border: none; width: 100%; height: 56px; border-radius: 10px; color: white; padding-inline: 59px; font-size: 16px; font-weight: bold; }
-    .poda-input::placeholder { color: #5a545a; font-weight: normal; }
-    .poda-input:focus { outline: none; }
-    .poda-main { position: relative; width: 100%; }
-    .poda-main:focus-within > .poda-input-mask { display: none; }
-    .poda-input-mask { pointer-events: none; width: 100px; height: 20px; position: absolute; background: linear-gradient(90deg, transparent, #010201); top: 18px; left: 70px; }
-    .poda-pink-mask { pointer-events: none; width: 30px; height: 20px; position: absolute; background: #cf30aa; top: 10px; left: 5px; filter: blur(20px); opacity: 0.8; transition: all 2s; }
-    .poda-main:hover > .poda-pink-mask { opacity: 0; }
-    .poda-white, .poda-border, .poda-darkBorderBg, .poda-glow { max-height: 70px; max-width: 314px; height: 100%; width: 100%; position: absolute; overflow: hidden; z-index: -1; border-radius: 12px; filter: blur(3px); }
-    .poda-white { max-height: 63px; max-width: 307px; border-radius: 10px; filter: blur(2px); }
-    .poda-white::before { content: ""; z-index: -2; text-align: center; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(83deg); position: absolute; width: 600px; height: 600px; background-repeat: no-repeat; background-position: 0 0; filter: brightness(1.4); background-image: conic-gradient(rgba(0,0,0,0) 0%, #a099d8, rgba(0,0,0,0) 8%, rgba(0,0,0,0) 50%, #dfa2da, rgba(0,0,0,0) 58%); transition: all 2s; }
-    .poda-border { max-height: 59px; max-width: 303px; border-radius: 11px; filter: blur(0.5px); }
-    .poda-border::before { content: ""; z-index: -2; text-align: center; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(70deg); position: absolute; width: 600px; height: 600px; filter: brightness(1.3); background-repeat: no-repeat; background-position: 0 0; background-image: conic-gradient(#1c191c, #402fb5 5%, #1c191c 14%, #1c191c 50%, #cf30aa 60%, #1c191c 64%); transition: all 2s; }
-    .poda-darkBorderBg { max-height: 65px; max-width: 312px; }
-    .poda-darkBorderBg::before { content: ""; z-index: -2; text-align: center; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(82deg); position: absolute; width: 600px; height: 600px; background-repeat: no-repeat; background-position: 0 0; background-image: conic-gradient(rgba(0,0,0,0), #18116a, rgba(0,0,0,0) 10%, rgba(0,0,0,0) 50%, #6e1b60, rgba(0,0,0,0) 60%); transition: all 2s; }
-    .poda-glow { overflow: hidden; filter: blur(30px); opacity: 0.4; max-height: 130px; max-width: 354px; }
-    .poda-glow::before { content: ""; z-index: -2; text-align: center; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(60deg); position: absolute; width: 999px; height: 999px; background-repeat: no-repeat; background-position: 0 0; background-image: conic-gradient(#000, #402fb5 5%, #000 38%, #000 50%, #cf30aa 60%, #000 87%); transition: all 2s; }
-    .poda-add-btn { position: absolute; top: 8px; right: 8px; display: flex; align-items: center; justify-content: center; z-index: 2; max-height: 40px; max-width: 38px; height: 100%; width: 100%; isolation: isolate; overflow: hidden; border-radius: 10px; background: linear-gradient(180deg, #161329, black, #1d1b4b); border: 1px solid transparent; cursor: pointer; }
-    .poda-add-btn:active { transform: scale(0.95); }
-    .poda-filterBorder { height: 42px; width: 40px; position: absolute; overflow: hidden; top: 7px; right: 7px; border-radius: 10px; pointer-events: none; }
-    .poda-filterBorder::before { content: ""; text-align: center; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(90deg); position: absolute; width: 600px; height: 600px; background-repeat: no-repeat; background-position: 0 0; filter: brightness(1.35); background-image: conic-gradient(rgba(0,0,0,0), #3d3a4f, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 50%, #3d3a4f, rgba(0,0,0,0) 100%); animation: p-rotate 4s linear infinite; }
-    .poda-search-icon { position: absolute; left: 20px; top: 15px; pointer-events: none; }
-    @keyframes p-rotate { 100% { transform: translate(-50%, -50%) rotate(450deg); } }
-
-    /* Day/Night Theme Switch CSS */
-    .theme-switch { --toggle-size: 8px; --container-width: 5.625em; --container-height: 2.5em; --container-radius: 6.25em; --container-light-bg: #3D7EAE; --container-night-bg: #1D1F2C; --circle-container-diameter: 3.375em; --sun-moon-diameter: 2.125em; --sun-bg: #ECCA2F; --moon-bg: #C4C9D1; --spot-color: #959DB1; --circle-container-offset: calc((var(--circle-container-diameter) - var(--container-height)) / 2 * -1); --stars-color: #fff; --clouds-color: #F3FDFF; --back-clouds-color: #AACADF; --transition: .5s cubic-bezier(0, -0.02, 0.4, 1.25); --circle-transition: .3s cubic-bezier(0, -0.02, 0.35, 1.17); box-sizing: border-box; font-size: var(--toggle-size); display: block; cursor: pointer; }
-    .theme-switch *, .theme-switch *::before, .theme-switch *::after { box-sizing: border-box; margin: 0; padding: 0; font-size: var(--toggle-size); }
-    .theme-switch__container { width: var(--container-width); height: var(--container-height); background-color: var(--container-light-bg); border-radius: var(--container-radius); overflow: hidden; cursor: pointer; box-shadow: 0em -0.062em 0.062em rgba(0, 0, 0, 0.25), 0em 0.062em 0.125em rgba(255, 255, 255, 0.94); transition: var(--transition); position: relative; }
-    .theme-switch__container::before { content: ""; position: absolute; z-index: 1; inset: 0; box-shadow: 0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset, 0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset; border-radius: var(--container-radius); }
-    .theme-switch__checkbox { display: none; }
-    .theme-switch__circle-container { width: var(--circle-container-diameter); height: var(--circle-container-diameter); background-color: rgba(255, 255, 255, 0.1); position: absolute; left: var(--circle-container-offset); top: var(--circle-container-offset); border-radius: var(--container-radius); box-shadow: inset 0 0 0 3.375em rgba(255, 255, 255, 0.1), inset 0 0 0 3.375em rgba(255, 255, 255, 0.1), 0 0 0 0.625em rgba(255, 255, 255, 0.1), 0 0 0 1.25em rgba(255, 255, 255, 0.1); display: flex; transition: var(--circle-transition); pointer-events: none; }
-    .theme-switch__sun-moon-container { pointer-events: auto; position: relative; z-index: 2; width: var(--sun-moon-diameter); height: var(--sun-moon-diameter); margin: auto; border-radius: var(--container-radius); background-color: var(--sun-bg); box-shadow: 0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset, 0em -0.062em 0.062em 0em #a1872a inset; filter: drop-shadow(0.062em 0.125em 0.125em rgba(0, 0, 0, 0.25)) drop-shadow(0em 0.062em 0.125em rgba(0, 0, 0, 0.25)); overflow: hidden; transition: var(--transition); }
-    .theme-switch__moon { transform: translateX(100%); width: 100%; height: 100%; background-color: var(--moon-bg); border-radius: inherit; box-shadow: 0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset, 0em -0.062em 0.062em 0em #969696 inset; transition: var(--transition); position: relative; }
-    .theme-switch__spot { position: absolute; top: 0.75em; left: 0.312em; width: 0.75em; height: 0.75em; border-radius: var(--container-radius); background-color: var(--spot-color); box-shadow: 0em 0.0312em 0.062em rgba(0, 0, 0, 0.25) inset; }
-    .theme-switch__spot:nth-of-type(2) { width: 0.375em; height: 0.375em; top: 0.937em; left: 1.375em; }
-    .theme-switch__spot:nth-last-of-type(3) { width: 0.25em; height: 0.25em; top: 0.312em; left: 0.812em; }
-  `}</style>
-);
-
-// ==============================================
-// 5. GAME COMPONENTS (MAGIC FLIP CARD)
-// ==============================================
 const FlipCard = ({ isFlipped, status }) => {
   const isSafe = status === 'SAFE';
-
-  // Dynamic Gradients for the Magic Card Background and Shadow
   const deckGradient = 'linear-gradient(to left, #f7ba2b 0%, #ea5358 100%)';
   const safeGradient = 'linear-gradient(to left, #00b09b, #96c93d)';
   const elimGradient = 'linear-gradient(to left, #ff416c, #ff4b2b)';
@@ -274,11 +150,9 @@ const FlipCard = ({ isFlipped, status }) => {
         className="relative w-full h-full text-center transition-transform duration-[600ms] [transform-style:preserve-3d]"
         style={{ transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
       >
-        {/* --- BACK SIDE (Cover Side / THE DECK) --- */}
         <div className="absolute w-full h-full [backface-visibility:hidden]">
           <div className="magic-card" style={{ '--bg-gradient': deckGradient }}>
             <div className="magic-card-info">
-              {/* THE DECK ANIMATION RESTORED HERE */}
               <p className="shine-text text-3xl font-black tracking-widest uppercase m-0">THE DECK</p>
               <p className="text-[10px] uppercase tracking-widest text-white/50 mt-4">
                 {isFlipped ? 'Revealing...' : 'Hold to View'}
@@ -287,7 +161,6 @@ const FlipCard = ({ isFlipped, status }) => {
           </div>
         </div>
 
-        {/* --- FRONT SIDE (Revealed Side / SAFE or ELIMINATE) --- */}
         <div className="absolute w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)]">
           <div className="magic-card" style={{ '--bg-gradient': isSafe ? safeGradient : elimGradient }}>
             <div className="magic-card-info">
@@ -300,7 +173,6 @@ const FlipCard = ({ isFlipped, status }) => {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
@@ -330,14 +202,13 @@ export default function GameBoard() {
     if (actionCallback) actionCallback();
   };
 
-  // Delayed action for button animations
   const handleDelayedAction = (actionCallback, soundEffect = sfx.tap) => {
     sfx.init();
     if (soundEffect) soundEffect.bind(sfx)();
     if (actionCallback) {
       setTimeout(() => {
         actionCallback();
-      }, 200); // 200ms delay
+      }, 200); 
     }
   };
 
@@ -364,14 +235,13 @@ export default function GameBoard() {
 
   const availableRecentNames = recentNames.filter(n => !players.some(p => p.name === n));
 
-  const displayStreak = roundResult
-    ? (roundResult.p1Lost ? 1 : winStreak + 1)
-    : winStreak;
+  const displayStreak = roundResult ? (roundResult.p1Lost ? 1 : winStreak + 1) : winStreak;
 
   return (
     <div className="relative flex flex-col items-center justify-center min-h-[100dvh] p-4 bg-transparent font-sans text-slate-800 select-none overflow-x-hidden w-full">
       
-      <GlobalStyles />
+      {/* STATIC STYLESHEET TO PREVENT GLITCHES */}
+      <style dangerouslySetInnerHTML={{ __html: GAME_STYLES }} />
 
       {/* --- KAMEHAME-HA RULE CARDS OVERLAY --- */}
       {showRules && (
@@ -407,7 +277,6 @@ export default function GameBoard() {
       {/* --- LOBBY PHASE --- */}
       {phase === 'lobby' && (
         <>
-          {/* --- BURGER / CROSS MENU (FIXED TOP LEFT) --- ONLY IN LOBBY */}
           <div className="fixed top-6 left-6 z-[60]">
             <label className="burger" htmlFor="burger">
               <input 
@@ -422,7 +291,6 @@ export default function GameBoard() {
             </label>
           </div>
 
-          {/* DAY/NIGHT TOGGLE SWITCH - TOP RIGHT - GLITCH FIXED */}
           <div className="fixed top-6 right-6 z-40 shadow-xl rounded-full">
             <label className="theme-switch" htmlFor="theme-switch-toggle">
               <input 
@@ -457,12 +325,10 @@ export default function GameBoard() {
 
           <div className="relative z-10 flex flex-col items-center w-full max-w-sm animate-fade-in py-8 mt-4">
             
-            {/* LOBBY TITLE */}
             <h1 className="shine-text text-4xl font-black tracking-[0.2em] mb-8 uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] text-center">
               The Deck
             </h1>
             
-            {/* NEON ANIMATED INPUT */}
             <div className="w-full mb-10 flex justify-center">
               <div className="poda">
                 <div className="poda-glow"></div>
@@ -511,7 +377,6 @@ export default function GameBoard() {
               </div>
             </div>
 
-            {/* Recent Players List */}
             {availableRecentNames.length > 0 && (
               <div className="w-full mb-6">
                 <p className="text-[10px] text-white uppercase tracking-widest mb-3 pl-2 text-center drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">Recent Players</p>
@@ -529,7 +394,6 @@ export default function GameBoard() {
               </div>
             )}
             
-            {/* Added Players List */}
             <div className="w-full space-y-2 mb-10 max-h-[300px] overflow-y-auto px-2">
               {players.map((p) => (
                 <div key={p.id} className="flex justify-between items-center py-4 px-6 bg-[#010201]/80 backdrop-blur-md border border-[#40c9ff]/30 rounded-2xl shadow-sm transition-all">
